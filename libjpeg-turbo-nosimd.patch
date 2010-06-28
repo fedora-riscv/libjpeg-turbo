@@ -1,0 +1,13 @@
+diff -up libjpeg-turbo-0.0.93/configure.ac.nosimd libjpeg-turbo-0.0.93/configure.ac
+--- libjpeg-turbo-0.0.93/configure.ac.nosimd	2010-06-10 12:02:48.903884378 +0200
++++ libjpeg-turbo-0.0.93/configure.ac	2010-06-10 12:27:11.721539379 +0200
+@@ -145,7 +145,8 @@ if test "x${with_simd}" != "xno"; then
+     ;;
+     *)
+       AC_MSG_RESULT([no ("$host_cpu")])
+-      AC_MSG_ERROR([CPU is not supported])
++      AC_MSG_WARN([SIMD is not supported on this CPU, performance will suffer])
++      with_simd=no;
+     ;;
+   esac
+ 
