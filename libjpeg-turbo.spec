@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	0.0.93
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -37,6 +37,7 @@ will manipulate JPEG files using the libjpeg-turbo library
 Summary:	Utilities for manipulating JPEG images
 Group:		Applications/Multimedia
 Obsoletes:	libjpeg < 6b-47
+Provides:	libjpeg = 6b-47
 
 %description utils
 The libjpeg-turbo-utils package contains simple client programs for
@@ -110,6 +111,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/wrjpgcom.1*
 
 %changelog
+* Wed Jun 30 2010 Adam Tkac <atkac redhat com> 0.0.93-10
+- add Provides = libjpeg to -utils subpackage
+
 * Mon Jun 28 2010 Adam Tkac <atkac redhat com> 0.0.93-9
 - merge review related fixes (#600243)
 
