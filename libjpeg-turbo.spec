@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	0.0.93
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -40,7 +40,6 @@ will manipulate JPEG files using the libjpeg-turbo library
 %package utils
 Summary:	Utilities for manipulating JPEG images
 Group:		Applications/Multimedia
-Provides:	libjpeg = 6b-47
 Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
 
 %description utils
@@ -115,7 +114,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/wrjpgcom.1*
 
 %changelog
-* Wed Jun 30 2010 Rex Dieter <rdieter@fedoraproject.org. 0.9.93-12
+* Fri Jul 02 2010 Adam Tkac <atkac redhat com>  0.0.93-13
+- remove libjpeg provides from -utils subpkg
+
+* Wed Jun 30 2010 Rex Dieter <rdieter@fedoraproject.org> 0.0.93-12
 - move Obsoletes: libjpeg to main pkg
 
 * Wed Jun 30 2010 Rex Dieter <rdieter@fedoraproject.org> 0.0.93-11
