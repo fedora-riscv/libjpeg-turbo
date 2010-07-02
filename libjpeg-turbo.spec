@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
-Version:	0.0.93
-Release:	13%{?dist}
+Version:	1.0.0
+Release:	1%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -14,12 +14,12 @@ BuildRequires:	autoconf, automake, libtool
 BuildRequires:	nasm
 %endif
 
-Patch0:		libjpeg-turbo-programs.patch
-Patch1:		libjpeg-turbo-nosimd.patch
-
 # moved this from -utils, in an attempt to get it to better override
 # libjpeg in rawhide -- Rex
-Obsoletes:      libjpeg < 6b-47
+Obsoletes:	libjpeg < 6b-47
+# add provides (even if it not needed) to workaround bad packages, like
+# java-1.6.0-openjdk (#rh607554) -- atkac
+Provides:	libjpeg = 6b-47
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
@@ -53,9 +53,6 @@ text comments into a JPEG file.
 
 %prep
 %setup -q
-
-%patch0 -p1 -b .programs
-%patch1 -p1 -b .nosimd
 
 %build
 autoreconf -fiv
@@ -114,7 +111,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/wrjpgcom.1*
 
 %changelog
-* Fri Jul 02 2010 Adam Tkac <atkac redhat com>  0.0.93-13
+* Fri Jul 02 2010 Adam Tkac <atkac redhat com> 1.0.0-1
+- update to 1.0.0
+- patches merged
+  - libjpeg-turbo-programs.patch
+  - libjpeg-turbo-nosimd.patch
+- add libjpeg provides to the main package to workaround problems with broken
+  java-1.6.0-openjdk package
+
+* Fri Jul 02 2010 Adam Tkac <atkac redhat com> 0.0.93-13
 - remove libjpeg provides from -utils subpkg
 
 * Wed Jun 30 2010 Rex Dieter <rdieter@fedoraproject.org> 0.0.93-12
