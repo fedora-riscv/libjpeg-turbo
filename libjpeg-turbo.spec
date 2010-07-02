@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.0.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -31,6 +31,9 @@ Group:		Development/Libraries
 Obsoletes:	libjpeg-devel < 6b-47
 Obsoletes:	libjpeg-static < 6b-47
 Provides:	libjpeg-devel = 6b-47
+%if "%{?_isa}" != ""
+Provides:	libjpeg-devel%{_isa} = 6b-47
+%endif
 Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
 
 %description devel
@@ -111,6 +114,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/wrjpgcom.1*
 
 %changelog
+* Fri Jul 02 2010 Adam Tkac <atkac redhat com> 1.0.0-2
+- add libjpeg-devel%%{_isa} provides to -devel subpkg to satisfy imlib-devel
+  deps
+
 * Fri Jul 02 2010 Adam Tkac <atkac redhat com> 1.0.0-1
 - update to 1.0.0
 - patches merged
