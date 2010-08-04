@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.0.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -20,6 +20,8 @@ Obsoletes:	libjpeg < 6b-47
 # add provides (even if it not needed) to workaround bad packages, like
 # java-1.6.0-openjdk (#rh607554) -- atkac
 Provides:	libjpeg = 6b-47
+
+Patch0:		libjpeg-turbo10-rh617469.patch
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
@@ -56,6 +58,8 @@ text comments into a JPEG file.
 
 %prep
 %setup -q
+
+%patch0 -p0 -b .rh617469
 
 %build
 autoreconf -fiv
@@ -114,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/wrjpgcom.1*
 
 %changelog
+* Wed Aug 04 2010 Adam Tkac <atkac redhat com> 1.0.0-3
+- fix huffman decoder to handle broken JPEGs well (#617469)
+
 * Fri Jul 02 2010 Adam Tkac <atkac redhat com> 1.0.0-2
 - add libjpeg-devel%%{_isa} provides to -devel subpkg to satisfy imlib-devel
   deps
