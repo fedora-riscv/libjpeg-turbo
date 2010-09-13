@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
-Version:	1.0.0
-Release:	3%{?dist}
+Version:	1.0.1
+Release:	1%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -21,8 +21,6 @@ Obsoletes:	libjpeg < 6b-47
 # java-1.6.0-openjdk (#rh607554) -- atkac
 Provides:	libjpeg = 6b-47
 
-Patch0:		libjpeg-turbo10-rh617469.patch
-
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
 JPEG images
@@ -31,7 +29,6 @@ JPEG images
 Summary:	Headers for the libjpeg-turbo library
 Group:		Development/Libraries
 Obsoletes:	libjpeg-devel < 6b-47
-Obsoletes:	libjpeg-static < 6b-47
 Provides:	libjpeg-devel = 6b-47
 %if "%{?_isa}" != ""
 Provides:	libjpeg-devel%{_isa} = 6b-47
@@ -56,15 +53,27 @@ can perform various useful transformations on JPEG files. Rdjpgcom
 displays any text comments included in a JPEG file. Wrjpgcom inserts
 text comments into a JPEG file.
 
+%package static
+Summary:	Static version of the libjpeg-turbo library
+Group:		Development/Libraries
+Obsoletes:	libjpeg-static < 6b-47
+Provides:	libjpeg-static = 6b-47
+%if "%{?_isa}" != ""
+Provides:	libjpeg-static%{_isa} = 6b-47
+%endif
+Requires:	libjpeg-turbo-devel%{_isa} = %{version}-%{release}
+
+%description static
+The libjpeg-turbo-static package contains static library for manipulating
+JPEG images
+
 %prep
 %setup -q
-
-%patch0 -p0 -b .rh617469
 
 %build
 autoreconf -fiv
 
-%configure --disable-static
+%configure
 
 make %{?_smp_mflags}
 
@@ -80,7 +89,7 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/lib{,turbo}jpeg.la
 
 # Don't distribute libjpegturbo because it is unversioned
 rm -f $RPM_BUILD_ROOT/%{_includedir}/turbojpeg.h
-rm -f $RPM_BUILD_ROOT/%{_libdir}/libturbojpeg.so
+rm -f $RPM_BUILD_ROOT/%{_libdir}/libturbojpeg.{so,a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -117,7 +126,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/rdjpgcom.1*
 %{_mandir}/man1/wrjpgcom.1*
 
+%files static
+%defattr(-,root,root,-)
+%{_libdir}/libjpeg.a
+
 %changelog
+* Mon Sep 13 2010 Adam Tkac <atkac redhat com> 1.0.1-1
+- update to 1.0.1
+  - libjpeg-turbo10-rh617469.patch merged
+- add -static subpkg (#632859)
+
 * Wed Aug 04 2010 Adam Tkac <atkac redhat com> 1.0.0-3
 - fix huffman decoder to handle broken JPEGs well (#617469)
 
