@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.0.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -131,6 +131,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libjpeg.a
 
 %changelog
+* Wed Sep 29 2010 jkeating - 1.0.1-2
+- Rebuilt for gcc bug 634757
+
 * Mon Sep 13 2010 Adam Tkac <atkac redhat com> 1.0.1-1
 - update to 1.0.1
   - libjpeg-turbo10-rh617469.patch merged
