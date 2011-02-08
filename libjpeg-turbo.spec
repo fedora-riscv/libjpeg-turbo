@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.0.90
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -131,6 +131,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libjpeg.a
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.90-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Mon Jan 17 2011 Adam Tkac <atkac redhat com> 1.0.90-1
 - update to 1.0.90
 - libjpeg-turbo10-rh639672.patch merged
