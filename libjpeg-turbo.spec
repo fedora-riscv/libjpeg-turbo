@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
-Version:	1.0.90
-Release:	2%{?dist}
+Version:	1.1.0
+Release:	1%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -20,6 +20,8 @@ Obsoletes:	libjpeg < 6b-47
 # add provides (even if it not needed) to workaround bad packages, like
 # java-1.6.0-openjdk (#rh607554) -- atkac
 Provides:	libjpeg = 6b-47
+
+Patch0:		libjpeg-turbo11-noinst_jpgtest.patch
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
@@ -69,6 +71,8 @@ JPEG images
 
 %prep
 %setup -q
+
+%patch0 -p1 -b .noinst_jpgtest
 
 %build
 autoreconf -fiv
@@ -131,6 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libjpeg.a
 
 %changelog
+* Tue Mar 01 2011 Adam Tkac <atkac redhat com> 1.1.0-1
+- update to 1.1.0
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.90-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
