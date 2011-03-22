@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
-Version:	1.0.1
-Release:	1%{?dist}.1
+Version:	1.1.0
+Release:	2%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -20,6 +20,9 @@ Obsoletes:	libjpeg < 6b-47
 # add provides (even if it not needed) to workaround bad packages, like
 # java-1.6.0-openjdk (#rh607554) -- atkac
 Provides:	libjpeg = 6b-47
+
+Patch0:		libjpeg-turbo11-noinst_jpgtest.patch
+Patch1:		ljt11-rh688712.patch
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
@@ -70,6 +73,9 @@ JPEG images
 %prep
 %setup -q
 
+%patch0 -p1 -b .noinst_jpgtest
+%patch1 -p0 -b .rh688712
+
 %build
 autoreconf -fiv
 
@@ -105,7 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(-,root,root,-)
-%doc coderules.doc jconfig.doc libjpeg.doc structure.doc example.c
+%doc coderules.txt jconfig.txt libjpeg.txt structure.txt example.c
 %{_includedir}/jconfig.h
 %{_includedir}/jerror.h
 %{_includedir}/jmorecfg.h
@@ -114,7 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files utils
 %defattr(-,root,root,-)
-%doc usage.doc wizard.doc
+%doc usage.txt wizard.txt
 %{_bindir}/cjpeg
 %{_bindir}/djpeg
 %{_bindir}/jpegtran
@@ -131,6 +137,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libjpeg.a
 
 %changelog
+* Tue Mar 22 2011 Adam Tkac <atkac redhat com> 1.1.0-2
+- handle broken JPEGs better (#688712)
+
+* Tue Mar 01 2011 Adam Tkac <atkac redhat com> 1.1.0-1
+- update to 1.1.0
+
+* Mon Jan 17 2011 Adam Tkac <atkac redhat com> 1.0.90-1
+- update to 1.0.90
+- libjpeg-turbo10-rh639672.patch merged
+
+* Fri Oct 29 2010 Adam Tkac <atkac redhat com> 1.0.1-3
+- add support for arithmetic coded files into decoder (#639672)
+
 * Wed Sep 29 2010 jkeating - 1.0.1-1.1
 - Rebuilt for gcc bug 634757
 
