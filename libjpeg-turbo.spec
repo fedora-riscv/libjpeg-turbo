@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.1.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -22,6 +22,7 @@ Obsoletes:	libjpeg < 6b-47
 Provides:	libjpeg = 6b-47
 
 Patch0:		libjpeg-turbo11-noinst_jpgtest.patch
+Patch1:		ljt11-rh688712.patch
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
@@ -73,6 +74,7 @@ JPEG images
 %setup -q
 
 %patch0 -p1 -b .noinst_jpgtest
+%patch1 -p0 -b .rh688712
 
 %build
 autoreconf -fiv
@@ -135,6 +137,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libjpeg.a
 
 %changelog
+* Tue Mar 22 2011 Adam Tkac <atkac redhat com> 1.1.0-2
+- handle broken JPEGs better (#688712)
+
 * Tue Mar 01 2011 Adam Tkac <atkac redhat com> 1.1.0-1
 - update to 1.1.0
 
