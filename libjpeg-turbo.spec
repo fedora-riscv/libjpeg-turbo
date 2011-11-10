@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.1.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -25,7 +25,7 @@ Patch0:		libjpeg-turbo11-noinst_jpgtest.patch
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
-JPEG images
+JPEG images.
 
 %package devel
 Summary:	Headers for the libjpeg-turbo library
@@ -39,7 +39,7 @@ Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
 
 %description devel
 This package contains header files necessary for developing programs which
-will manipulate JPEG files using the libjpeg-turbo library
+will manipulate JPEG files using the libjpeg-turbo library.
 
 %package utils
 Summary:	Utilities for manipulating JPEG images
@@ -67,7 +67,22 @@ Requires:	libjpeg-turbo-devel%{_isa} = %{version}-%{release}
 
 %description static
 The libjpeg-turbo-static package contains static library for manipulating
-JPEG images
+JPEG images.
+
+%package -n turbojpeg
+Summary:	TurboJPEG library
+Group:		System Environment/Libraries
+
+%description -n turbojpeg
+The turbojpeg package contains the TurboJPEG shared library.
+
+%package -n turbojpeg-devel
+Summary:	Headers for the TurboJPEG library
+Group:		Development/Libraries
+
+%description -n turbojpeg-devel
+This package contains header files necessary for developing programs which
+will manipulate JPEG files using the TurboJPEG library.
 
 %prep
 %setup -q
@@ -91,9 +106,8 @@ chmod -x README-turbo.txt
 # Remove unwanted files
 rm -f $RPM_BUILD_ROOT/%{_libdir}/lib{,turbo}jpeg.la
 
-# Don't distribute libjpegturbo because it is unversioned
-rm -f $RPM_BUILD_ROOT/%{_includedir}/turbojpeg.h
-rm -f $RPM_BUILD_ROOT/%{_libdir}/libturbojpeg.{so,a}
+# Don't distribute libjpegturbo.a
+rm -f $RPM_BUILD_ROOT/%{_libdir}/libturbojpeg.a
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -134,7 +148,16 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %{_libdir}/libjpeg.a
 
+%files -n turbojpeg
+%{_libdir}/libturbojpeg.so
+
+%files -n turbojpeg-devel
+%{_includedir}/turbojpeg.h
+
 %changelog
+* Fri Oct 7 2011 Orion Poplawski <orion cora nwra com> 1.1.1-2
+- Ship the turbojpeg library (#744258)
+
 * Mon Jul 11 2011 Adam Tkac <atkac redhat com> 1.1.1-1
 - update to 1.1.1
   - ljt11-rh688712.patch merged
