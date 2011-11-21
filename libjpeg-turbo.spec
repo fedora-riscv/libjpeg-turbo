@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.1.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -79,6 +79,7 @@ The turbojpeg package contains the TurboJPEG shared library.
 %package -n turbojpeg-devel
 Summary:	Headers for the TurboJPEG library
 Group:		Development/Libraries
+Requires:	turbojpeg%{?_isa} = %{version}-%{release}
 
 %description -n turbojpeg-devel
 This package contains header files necessary for developing programs which
@@ -155,6 +156,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/turbojpeg.h
 
 %changelog
+* Mon Nov 21 2011 Orion Poplawski <orion cora nwra com> 1.1.1-3
+- Make turobojpeg-devel depend on turbojpeg
+
 * Fri Oct 7 2011 Orion Poplawski <orion cora nwra com> 1.1.1-2
 - Ship the turbojpeg library (#744258)
 
