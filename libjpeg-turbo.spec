@@ -63,7 +63,7 @@ Provides:	libjpeg-static = 6b-47
 %if "%{?_isa}" != ""
 Provides:	libjpeg-static%{_isa} = 6b-47
 %endif
-Requires:	libjpeg-turbo-devel%{_isa} = %{version}-%{release}
+Requires:	libjpeg-turbo-devel%{?_isa} = %{version}-%{release}
 
 %description static
 The libjpeg-turbo-static package contains static library for manipulating
