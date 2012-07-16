@@ -1,5 +1,5 @@
 Name:		libjpeg-turbo
-Version:	1.2.0
+Version:	1.2.1
 Release:	1%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
@@ -156,6 +156,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/turbojpeg.h
 
 %changelog
+* Mon Jul 16 2012 Adam Tkac <atkac redhat com> 1.2.1-1
+- update to 1.2.1
+
 * Thu Mar 08 2012 Adam Tkac <atkac redhat com> 1.2.0-1
 - update to 1.2.0
 
