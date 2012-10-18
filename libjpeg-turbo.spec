@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.2.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -19,7 +19,10 @@ BuildRequires:	nasm
 Obsoletes:	libjpeg < 6b-47
 # add provides (even if it not needed) to workaround bad packages, like
 # java-1.6.0-openjdk (#rh607554) -- atkac
-Provides:	libjpeg = 6b-47
+Provides:	libjpeg = 6b-47%{?dist}
+%if "%{?_isa}" != ""
+Provides:	libjpeg%{_isa} = 6b-47%{?dist}
+%endif
 
 Patch0:		libjpeg-turbo12-noinst.patch
 
@@ -31,9 +34,9 @@ JPEG images.
 Summary:	Headers for the libjpeg-turbo library
 Group:		Development/Libraries
 Obsoletes:	libjpeg-devel < 6b-47
-Provides:	libjpeg-devel = 6b-47
+Provides:	libjpeg-devel = 6b-47%{?dist}
 %if "%{?_isa}" != ""
-Provides:	libjpeg-devel%{_isa} = 6b-47
+Provides:	libjpeg-devel%{_isa} = 6b-47%{?dist}
 %endif
 Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
 
@@ -59,9 +62,9 @@ text comments into a JPEG file.
 Summary:	Static version of the libjpeg-turbo library
 Group:		Development/Libraries
 Obsoletes:	libjpeg-static < 6b-47
-Provides:	libjpeg-static = 6b-47
+Provides:	libjpeg-static = 6b-47%{?dist}
 %if "%{?_isa}" != ""
-Provides:	libjpeg-static%{_isa} = 6b-47
+Provides:	libjpeg-static%{_isa} = 6b-47%{?dist}
 %endif
 Requires:	libjpeg-turbo-devel%{?_isa} = %{version}-%{release}
 
@@ -156,6 +159,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/turbojpeg.h
 
 %changelog
+* Thu Oct 18 2012 Adam Tkac <atkac redhat com> 1.2.1-3
+- minor provides tuning (#863231)
+
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
