@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.2.1
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -96,7 +96,7 @@ will manipulate JPEG files using the TurboJPEG library.
 %build
 autoreconf -fiv
 
-%configure
+%configure --with-jpeg8
 
 make %{?_smp_mflags}
 
@@ -122,8 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README README-turbo.txt change.log ChangeLog.txt
-%{_libdir}/libjpeg.so.62.0.0
-%{_libdir}/libjpeg.so.62
+%{_libdir}/libjpeg.so.8*
 
 %files devel
 %defattr(-,root,root,-)
@@ -159,6 +158,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/turbojpeg.h
 
 %changelog
+* Wed Oct 24 2012 Adam Tkac <atkac redhat com> 1.2.1-4
+- build with jpeg8 API/ABI (#854695)
+
 * Thu Oct 18 2012 Adam Tkac <atkac redhat com> 1.2.1-3
 - minor provides tuning (#863231)
 
