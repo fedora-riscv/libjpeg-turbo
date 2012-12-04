@@ -1,10 +1,10 @@
 Name:		libjpeg-turbo
 Version:	1.2.1
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
-License:	wxWidgets
+License:	IJG
 URL:		http://sourceforge.net/projects/libjpeg-turbo
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -158,6 +158,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/turbojpeg.h
 
 %changelog
+* Tue Dec 04 2012 Adam Tkac <atkac redhat com> 1.2.1-5
+- change license to IJG (#877517)
+
 * Wed Oct 24 2012 Adam Tkac <atkac redhat com> 1.2.1-4
 - build with jpeg8 API/ABI (#854695)
 
