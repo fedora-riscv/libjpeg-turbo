@@ -1,12 +1,14 @@
+%global snap 20130204svn922
+
 Name:		libjpeg-turbo
-Version:	1.2.1
-Release:	4%{?dist}
+Version:	1.2.90
+Release:	0.1.%{snap}%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
 License:	IJG
 URL:		http://sourceforge.net/projects/libjpeg-turbo
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}-%{snap}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	autoconf, automake, libtool
@@ -89,7 +91,7 @@ This package contains header files necessary for developing programs which
 will manipulate JPEG files using the TurboJPEG library.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-%{snap}
 
 %patch0 -p1 -b .noinst
 
@@ -116,8 +118,14 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/libturbojpeg.a
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%check
+make test
+
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
+
+%post -n turbojpeg -p /sbin/ldconfig
+%postun -n turbojpeg -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root,-)
@@ -153,12 +161,17 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libjpeg.a
 
 %files -n turbojpeg
-%{_libdir}/libturbojpeg.so
+%{_libdir}/libturbojpeg.so.0*
 
 %files -n turbojpeg-devel
 %{_includedir}/turbojpeg.h
+%{_libdir}/libturbojpeg.so
 
 %changelog
+* Mon Feb 04 2013 Adam Tkac <atkac redhat com> 1.2.90-0.1.20130204svn922
+- update to 1.2.80 snapshot (#854695)
+- run `make test` during build
+
 * Tue Dec 04 2012 Adam Tkac <atkac redhat com> 1.2.1-4
 - change license to IJG (#877517)
 
