@@ -1,20 +1,20 @@
-diff -up libjpeg-turbo-1.2.0/Makefile.am.noinst_tjbench libjpeg-turbo-1.2.0/Makefile.am
---- libjpeg-turbo-1.2.0/Makefile.am.noinst_tjbench	2012-02-10 04:47:55.000000000 +0100
-+++ libjpeg-turbo-1.2.0/Makefile.am	2012-03-08 15:56:43.081230011 +0100
-@@ -72,8 +72,8 @@ libjpeg_la_SOURCES += jsimd_none.c
+diff -up libjpeg-turbo-1.2.90-20130204svn922/Makefile.am.noinst libjpeg-turbo-1.2.90-20130204svn922/Makefile.am
+--- libjpeg-turbo-1.2.90-20130204svn922/Makefile.am.noinst	2013-01-19 02:06:46.000000000 +0100
++++ libjpeg-turbo-1.2.90-20130204svn922/Makefile.am	2013-02-04 15:55:18.824110574 +0100
+@@ -89,9 +89,7 @@ noinst_PROGRAMS = jcstest
  
- endif
+ if WITH_TURBOJPEG
  
--bin_PROGRAMS = cjpeg djpeg jpegtran rdjpgcom wrjpgcom tjbench
--noinst_PROGRAMS = tjunittest jcstest
-+bin_PROGRAMS = cjpeg djpeg jpegtran rdjpgcom wrjpgcom
-+noinst_PROGRAMS = tjunittest jcstest tjbench
+-bin_PROGRAMS += tjbench
+-
+-noinst_PROGRAMS += tjunittest
++noinst_PROGRAMS += tjbench tjunittest
  
  tjbench_SOURCES = tjbench.c bmp.h bmp.c tjutil.h tjutil.c rdbmp.c rdppm.c \
  	wrbmp.c wrppm.c
-@@ -123,14 +123,6 @@ dist_man1_MANS = cjpeg.1 djpeg.1 jpegtra
- DOCS= install.txt coderules.txt filelist.txt jconfig.txt change.log \
- 	rdrle.c wrrle.c BUILDING.txt ChangeLog.txt
+@@ -144,14 +142,6 @@ dist_man1_MANS = cjpeg.1 djpeg.1 jpegtra
+ DOCS= coderules.txt jconfig.txt change.log rdrle.c wrrle.c BUILDING.txt \
+ 	ChangeLog.txt
  
 -docdir = $(datadir)/doc
 -dist_doc_DATA = README README-turbo.txt libjpeg.txt structure.txt usage.txt \
@@ -24,6 +24,6 @@ diff -up libjpeg-turbo-1.2.0/Makefile.am.noinst_tjbench libjpeg-turbo-1.2.0/Make
 -dist_example_DATA = example.c
 -
 -
- EXTRA_DIST = win release $(DOCS) testimages CMakeLists.txt \
+ EXTRA_DIST = win release $(DOCS) testimages md5cmp CMakeLists.txt \
  	sharedlib/CMakeLists.txt cmakescripts libjpeg.map.in doc doxygen.config \
  	jccolext.c jdcolext.c jdmrgext.c
