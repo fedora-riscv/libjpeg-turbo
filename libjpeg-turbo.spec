@@ -128,8 +128,7 @@ make test
 %files
 %defattr(-,root,root,-)
 %doc README README-turbo.txt change.log ChangeLog.txt
-%{_libdir}/libjpeg.so.62.0.0
-%{_libdir}/libjpeg.so.62
+%{_libdir}/libjpeg.so.62*
 
 %files devel
 %defattr(-,root,root,-)
