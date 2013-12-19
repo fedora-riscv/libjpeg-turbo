@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.3.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -169,6 +169,9 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Thu Dec 19 2013 Petr Hracek <phracek@redhat.com> - 1.3.0-2
+- Apply fixes CVE-2013-6629, CVE-2013-6630 (#20131737)
+
 * Thu Jul 25 2013 Petr Hracek <phracek@redhat.com> - 1.3.0-1
 - new upstream version
 - no soname bump change
