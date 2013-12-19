@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
 Version:	1.2.90
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -25,6 +25,8 @@ Provides:	libjpeg%{_isa} = 6b-47%{?dist}
 %endif
 
 Patch0:		libjpeg-turbo12-noinst.patch
+Patch1:		libjpeg-turbo-CVE-2013-6629.patch
+Patch2:		libjpeg-turbo-CVE-2013-6630.patch
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
@@ -92,6 +94,8 @@ will manipulate JPEG files using the TurboJPEG library.
 %setup -q
 
 %patch0 -p1 -b .noinst
+%patch1 -p1 -b .CVE-2013-6629
+%patch2 -p1 -b .CVE-2013-6630
 
 %build
 autoreconf -fiv
@@ -165,6 +169,9 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Thu Dec 19 2013 Petr Hracek <phracek@redhat.com> - 1.2.90-3
+- Apply fixes CVE-2013-6629, CVE-2013-6630 (#1031737)
+
 * Tue Mar 26 2013 Adam Tkac <atkac redhat com> - 1.2.90-2
 - rebuild for ARM64 support
 
