@@ -1,6 +1,6 @@
 Name:		libjpeg-turbo
-Version:	1.3.0
-Release:	2%{?dist}
+Version:	1.3.1
+Release:	1%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
 
 Group:		System Environment/Libraries
@@ -25,8 +25,7 @@ Provides:	libjpeg%{_isa} = 6b-47%{?dist}
 %endif
 
 Patch0:		libjpeg-turbo12-noinst.patch
-Patch1:		libjpeg-turbo-CVE-2013-6629.patch
-Patch2:		libjpeg-turbo-CVE-2013-6630.patch
+Patch3:     libjpeg-turbo-header-files.patch
 
 %description
 The libjpeg-turbo package contains a library of functions for manipulating
@@ -35,12 +34,9 @@ JPEG images.
 %package devel
 Summary:	Headers for the libjpeg-turbo library
 Group:		Development/Libraries
-Obsoletes:	libjpeg-devel < 6b-47
-Provides:	libjpeg-devel = 6b-47%{?dist}
-%if "%{?_isa}" != ""
-Provides:	libjpeg-devel%{_isa} = 6b-47%{?dist}
-%endif
 Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
+Obsoletes:	libjpeg-turbo-static < 1.3.1
+Provides:   libjpeg-turbo-static = 1.3.1%{?dist}
 
 %description devel
 This package contains header files necessary for developing programs which
@@ -59,20 +55,6 @@ Djpeg decompresses a JPEG file into a regular image file. Jpegtran
 can perform various useful transformations on JPEG files. Rdjpgcom
 displays any text comments included in a JPEG file. Wrjpgcom inserts
 text comments into a JPEG file.
-
-%package static
-Summary:	Static version of the libjpeg-turbo library
-Group:		Development/Libraries
-Obsoletes:	libjpeg-static < 6b-47
-Provides:	libjpeg-static = 6b-47%{?dist}
-%if "%{?_isa}" != ""
-Provides:	libjpeg-static%{_isa} = 6b-47%{?dist}
-%endif
-Requires:	libjpeg-turbo-devel%{?_isa} = %{version}-%{release}
-
-%description static
-The libjpeg-turbo-static package contains static library for manipulating
-JPEG images.
 
 %package -n turbojpeg
 Summary:	TurboJPEG library
@@ -94,13 +76,12 @@ will manipulate JPEG files using the TurboJPEG library.
 %setup -q
 
 %patch0 -p1 -b .noinst
-%patch1 -p1 -b .CVE-2013-6629
-%patch2 -p1 -b .CVE-2013-6630
+%patch3 -p1 -b .header-files
 
 %build
 autoreconf -fiv
 
-%configure
+%configure --disable-static
 
 make %{?_smp_mflags}
 
@@ -113,9 +94,6 @@ chmod -x README-turbo.txt
 
 # Remove unwanted files
 rm -f $RPM_BUILD_ROOT/%{_libdir}/lib{,turbo}jpeg.la
-
-# Don't distribute libjpegturbo.a
-rm -f $RPM_BUILD_ROOT/%{_libdir}/libturbojpeg.a
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -137,6 +115,7 @@ make test
 %files devel
 %defattr(-,root,root,-)
 %doc coderules.txt jconfig.txt libjpeg.txt structure.txt example.c
+%{_includedir}/jpegint.h
 %{_includedir}/jconfig.h
 %{_includedir}/jerror.h
 %{_includedir}/jmorecfg.h
@@ -157,10 +136,6 @@ make test
 %{_mandir}/man1/rdjpgcom.1*
 %{_mandir}/man1/wrjpgcom.1*
 
-%files static
-%defattr(-,root,root,-)
-%{_libdir}/libjpeg.a
-
 %files -n turbojpeg
 %{_libdir}/libturbojpeg.so.0*
 
@@ -169,6 +144,13 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Wed Apr 16 2014 Petr Hracek <phracek@redhat.com> - 1.3.1-1
+- New upstream version
+- Remove upstreamed patches, add missing jpegint.h
+- Clean up SPEC file
+- Disable --static subpackage
+- Remove libjpeg obsolency, removed in Fedora 13
+
 * Thu Dec 19 2013 Petr Hracek <phracek@redhat.com> - 1.3.0-2
 - Apply fixes CVE-2013-6629, CVE-2013-6630 (#20131737)
 
