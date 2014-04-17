@@ -2,20 +2,21 @@ Name:		libjpeg-turbo
 Version:	1.3.1
 Release:	1%{?dist}
 Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
-
-Group:		System Environment/Libraries
 License:	IJG
 URL:		http://sourceforge.net/projects/libjpeg-turbo
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:	autoconf, automake, libtool
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Patch0:		libjpeg-turbo12-noinst.patch
+Patch1:     libjpeg-turbo-header-files.patch
+
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm
 %endif
 
-# moved this from -utils, in an attempt to get it to better override
-# libjpeg in rawhide -- Rex
 Obsoletes:	libjpeg < 6b-47
 # add provides (even if it not needed) to workaround bad packages, like
 # java-1.6.0-openjdk (#rh607554) -- atkac
@@ -24,79 +25,67 @@ Provides:	libjpeg = 6b-47%{?dist}
 Provides:	libjpeg%{_isa} = 6b-47%{?dist}
 %endif
 
-Patch0:		libjpeg-turbo12-noinst.patch
-Patch3:     libjpeg-turbo-header-files.patch
-
 %description
-The libjpeg-turbo package contains a library of functions for manipulating
-JPEG images.
+The libjpeg-turbo package contains a library of functions for manipulating JPEG
+images.
 
 %package devel
 Summary:	Headers for the libjpeg-turbo library
-Group:		Development/Libraries
+Obsoletes:	libjpeg-devel < 6b-47
+Provides:	libjpeg-devel = 6b-47%{?dist}
+%if "%{?_isa}" != ""
+Provides:	libjpeg-devel%{_isa} = 6b-47%{?dist}
+%endif
 Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
 Obsoletes:	libjpeg-turbo-static < 1.3.1
 Provides:   libjpeg-turbo-static = 1.3.1%{?dist}
 
 %description devel
-This package contains header files necessary for developing programs which
-will manipulate JPEG files using the libjpeg-turbo library.
+This package contains header files necessary for developing programs which will
+manipulate JPEG files using the libjpeg-turbo library.
 
 %package utils
 Summary:	Utilities for manipulating JPEG images
-Group:		Applications/Multimedia
 Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
 
 %description utils
-The libjpeg-turbo-utils package contains simple client programs for
-accessing the libjpeg functions. It contains cjpeg, djpeg, jpegtran,
-rdjpgcom and wrjpgcom. Cjpeg compresses an image file into JPEG format.
-Djpeg decompresses a JPEG file into a regular image file. Jpegtran
-can perform various useful transformations on JPEG files. Rdjpgcom
-displays any text comments included in a JPEG file. Wrjpgcom inserts
-text comments into a JPEG file.
+The libjpeg-turbo-utils package contains simple client programs for accessing
+the libjpeg functions. It contains cjpeg, djpeg, jpegtran, rdjpgcom and
+wrjpgcom. Cjpeg compresses an image file into JPEG format. Djpeg decompresses a
+JPEG file into a regular image file. Jpegtran can perform various useful
+transformations on JPEG files. Rdjpgcom displays any text comments included in a
+JPEG file. Wrjpgcom inserts text comments into a JPEG file.
 
 %package -n turbojpeg
 Summary:	TurboJPEG library
-Group:		System Environment/Libraries
 
 %description -n turbojpeg
 The turbojpeg package contains the TurboJPEG shared library.
 
 %package -n turbojpeg-devel
 Summary:	Headers for the TurboJPEG library
-Group:		Development/Libraries
 Requires:	turbojpeg%{?_isa} = %{version}-%{release}
 
 %description -n turbojpeg-devel
-This package contains header files necessary for developing programs which
-will manipulate JPEG files using the TurboJPEG library.
+This package contains header files necessary for developing programs which will
+manipulate JPEG files using the TurboJPEG library.
 
 %prep
 %setup -q
-
 %patch0 -p1 -b .noinst
-%patch3 -p1 -b .header-files
+%patch1 -p1 -b .header-files
 
 %build
 autoreconf -fiv
-
 %configure --disable-static
-
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
+find %{buildroot} -name "*.la" -delete
 
 # Fix perms
 chmod -x README-turbo.txt
-
-# Remove unwanted files
-rm -f $RPM_BUILD_ROOT/%{_libdir}/lib{,turbo}jpeg.la
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %check
 make test
@@ -108,22 +97,19 @@ make test
 %postun -n turbojpeg -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root,-)
 %doc README README-turbo.txt change.log ChangeLog.txt
 %{_libdir}/libjpeg.so.62*
 
 %files devel
-%defattr(-,root,root,-)
 %doc coderules.txt jconfig.txt libjpeg.txt structure.txt example.c
-%{_includedir}/jpegint.h
 %{_includedir}/jconfig.h
 %{_includedir}/jerror.h
 %{_includedir}/jmorecfg.h
+%{_includedir}/jpegint.h
 %{_includedir}/jpeglib.h
 %{_libdir}/libjpeg.so
 
 %files utils
-%defattr(-,root,root,-)
 %doc usage.txt wizard.txt
 %{_bindir}/cjpeg
 %{_bindir}/djpeg
@@ -144,6 +130,9 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Thu Apr 16 2014 Simone Caronni <negativo17@gmail.com> - 1.3.1-2
+- Re-add libjpeg-devel requirements for broken packages since Fedora 13.
+
 * Wed Apr 16 2014 Petr Hracek <phracek@redhat.com> - 1.3.1-1
 - New upstream version
 - Remove upstreamed patches, add missing jpegint.h
