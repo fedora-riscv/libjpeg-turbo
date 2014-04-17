@@ -1,28 +1,28 @@
-Name:		libjpeg-turbo
-Version:	1.3.1
-Release:	1%{?dist}
-Summary:	A MMX/SSE2 accelerated library for manipulating JPEG image files
-License:	IJG
-URL:		http://sourceforge.net/projects/libjpeg-turbo
+Name:           libjpeg-turbo
+Version:        1.3.1
+Release:        1%{?dist}
+Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
+License:        IJG
+URL:            http://sourceforge.net/projects/libjpeg-turbo
 
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Patch0:		libjpeg-turbo12-noinst.patch
-Patch1:     libjpeg-turbo-header-files.patch
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Patch0:         libjpeg-turbo12-noinst.patch
+Patch1:         libjpeg-turbo-header-files.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
 
 %ifarch %{ix86} x86_64
-BuildRequires:	nasm
+BuildRequires:  nasm
 %endif
 
-Obsoletes:	libjpeg < 6b-47
+Obsoletes:      libjpeg < 6b-47
 # add provides (even if it not needed) to workaround bad packages, like
 # java-1.6.0-openjdk (#rh607554) -- atkac
-Provides:	libjpeg = 6b-47%{?dist}
+Provides:       libjpeg = 6b-47%{?dist}
 %if "%{?_isa}" != ""
-Provides:	libjpeg%{_isa} = 6b-47%{?dist}
+Provides:       libjpeg%{_isa} = 6b-47%{?dist}
 %endif
 
 %description
@@ -30,23 +30,23 @@ The libjpeg-turbo package contains a library of functions for manipulating JPEG
 images.
 
 %package devel
-Summary:	Headers for the libjpeg-turbo library
-Obsoletes:	libjpeg-devel < 6b-47
-Provides:	libjpeg-devel = 6b-47%{?dist}
+Summary:        Headers for the libjpeg-turbo library
+Obsoletes:      libjpeg-devel < 6b-47
+Provides:       libjpeg-devel = 6b-47%{?dist}
 %if "%{?_isa}" != ""
-Provides:	libjpeg-devel%{_isa} = 6b-47%{?dist}
+Provides:       libjpeg-devel%{_isa} = 6b-47%{?dist}
 %endif
-Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
-Obsoletes:	libjpeg-turbo-static < 1.3.1
-Provides:   libjpeg-turbo-static = 1.3.1%{?dist}
+Requires:       libjpeg-turbo%{?_isa} = %{version}-%{release}
+Obsoletes:      libjpeg-turbo-static < 1.3.1
+Provides:       libjpeg-turbo-static = 1.3.1%{?dist}
 
 %description devel
 This package contains header files necessary for developing programs which will
 manipulate JPEG files using the libjpeg-turbo library.
 
 %package utils
-Summary:	Utilities for manipulating JPEG images
-Requires:	libjpeg-turbo%{?_isa} = %{version}-%{release}
+Summary:        Utilities for manipulating JPEG images
+Requires:       libjpeg-turbo%{?_isa} = %{version}-%{release}
 
 %description utils
 The libjpeg-turbo-utils package contains simple client programs for accessing
@@ -57,14 +57,14 @@ transformations on JPEG files. Rdjpgcom displays any text comments included in a
 JPEG file. Wrjpgcom inserts text comments into a JPEG file.
 
 %package -n turbojpeg
-Summary:	TurboJPEG library
+Summary:        TurboJPEG library
 
 %description -n turbojpeg
 The turbojpeg package contains the TurboJPEG shared library.
 
 %package -n turbojpeg-devel
-Summary:	Headers for the TurboJPEG library
-Requires:	turbojpeg%{?_isa} = %{version}-%{release}
+Summary:        Headers for the TurboJPEG library
+Requires:       turbojpeg%{?_isa} = %{version}-%{release}
 
 %description -n turbojpeg-devel
 This package contains header files necessary for developing programs which will
@@ -130,7 +130,7 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
-* Thu Apr 16 2014 Simone Caronni <negativo17@gmail.com> - 1.3.1-2
+* Thu Apr 17 2014 Simone Caronni <negativo17@gmail.com> - 1.3.1-2
 - Re-add libjpeg-devel requirements for broken packages since Fedora 13.
 
 * Wed Apr 16 2014 Petr Hracek <phracek@redhat.com> - 1.3.1-1
