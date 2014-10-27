@@ -1,5 +1,5 @@
 diff --git a/Makefile.am b/Makefile.am
-index c8e8b93..0496879 100644
+index d767e4f..584d0c0 100644
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -1,6 +1,6 @@

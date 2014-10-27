@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
-Version:        1.3.1
-Release:        4%{?dist}
+Version:        1.3.90
+Release:        1%{?dist}
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -130,6 +130,10 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Mon Oct 27 2014 Petr Hracek <phracek@redhat.com> - 1.3.90-1
+- new upstream version 1.3.90
+Resolves #1135375
+
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
