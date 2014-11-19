@@ -1,13 +1,16 @@
 Name:           libjpeg-turbo
 Version:        1.3.90
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
 
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source1:        jdmrg565.c
 Patch0:         libjpeg-turbo12-noinst.patch
 Patch1:         libjpeg-turbo-header-files.patch
+Patch2:         libjpeg-turbo-second-arch.patch
+Patch3:         libjpeg-turbo-remove-test.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -74,6 +77,10 @@ manipulate JPEG files using the TurboJPEG library.
 %setup -q
 %patch0 -p1 -b .noinst
 %patch1 -p1 -b .header-files
+%patch2 -p1 -b .second-arch
+%patch3 -p1 -b .remove-test
+
+cp %SOURCE1 .
 
 %build
 autoreconf -fiv
@@ -130,6 +137,9 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Wed Nov 19 2014 Petr Hracek <phracek@redhat.com> - 1.3.90-2
+- Resolves #1161585 Add suport for secondary arches
+
 * Mon Oct 27 2014 Petr Hracek <phracek@redhat.com> - 1.3.90-1
 - new upstream version 1.3.90
 Resolves #1135375
