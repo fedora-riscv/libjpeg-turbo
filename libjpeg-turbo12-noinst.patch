@@ -1,5 +1,5 @@
 diff --git a/Makefile.am b/Makefile.am
-index 1aeb5dd..d767e4f 100644
+index b32a41b..1758e5f 100644
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -90,9 +90,7 @@ noinst_PROGRAMS = jcstest
@@ -9,7 +9,7 @@ index 1aeb5dd..d767e4f 100644
 -bin_PROGRAMS += tjbench
 -
 -noinst_PROGRAMS += tjunittest
-+noinst_PROGRAMS += tjbench tjunittest
++noinst_PROGRAMS += tjbench tjunittest 
  
  tjbench_SOURCES = tjbench.c bmp.h bmp.c tjutil.h tjutil.c rdbmp.c rdppm.c \
  	wrbmp.c wrppm.c
@@ -27,4 +27,4 @@ index 1aeb5dd..d767e4f 100644
 -
  EXTRA_DIST = win release $(DOCS) testimages CMakeLists.txt \
  	sharedlib/CMakeLists.txt cmakescripts libjpeg.map.in doc doxygen.config \
- 	doxygen-extra.css jccolext.c jdcolext.c jdcol565.c jdmrgext.c jstdhuff.c
+ 	doxygen-extra.css jccolext.c jdcolext.c jdcol565.c jdmrgext.c jdmrg565.c \
