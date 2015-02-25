@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.3.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -8,6 +8,7 @@ URL:            http://sourceforge.net/projects/libjpeg-turbo
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         libjpeg-turbo12-noinst.patch
 Patch1:         libjpeg-turbo-header-files.patch
+Patch2:         libjpeg-turbo-CVE-2014-9092.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -74,6 +75,7 @@ manipulate JPEG files using the TurboJPEG library.
 %setup -q
 %patch0 -p1 -b .noinst
 %patch1 -p1 -b .header-files
+%patch2 -p1 -b .CVE-2014-9092
 
 %build
 autoreconf -fiv
@@ -130,6 +132,10 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Wed Feb 25 2015 Petr Hracek <phracek@redhat.com> - 1.3.1-3
+- CVE-2014-9092 libjpeg-turbo: denial of service via speciallu crafted JPEG file
+  (#1169845)
+
 * Thu Apr 17 2014 Simone Caronni <negativo17@gmail.com> - 1.3.1-2
 - Re-add libjpeg-devel requirements for broken packages since Fedora 13.
 
