@@ -1,22 +1,18 @@
 Name:           libjpeg-turbo
-Version:        1.4.0
+Version:        1.4.1
 Release:        1%{?dist}
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
 
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Patch0:		libjpeg-turbo12-noinst.patch
-Patch1:		libjpeg-turbo-header-files.patch
-Patch2:		libjpeg-turbo-remove-test.patch
+Patch0:         libjpeg-turbo14-noinst.patch
+Patch1:         libjpeg-turbo-header-files.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
-
-%ifarch %{ix86} x86_64
 BuildRequires:  nasm
-%endif
 
 Obsoletes:      libjpeg < 6b-47
 # add provides (even if it not needed) to workaround bad packages, like
@@ -75,10 +71,9 @@ manipulate JPEG files using the TurboJPEG library.
 %setup -q
 %patch0 -p1 -b .noinst
 %patch1 -p1 -b .header-files
-%patch2 -p1 -b .remove-test
 
 %build
-autoreconf -fiv
+autoreconf -vif
 %configure --disable-static
 make %{?_smp_mflags}
 
@@ -90,7 +85,7 @@ find %{buildroot} -name "*.la" -delete
 chmod -x README-turbo.txt
 
 %check
-make test
+make test %{?_smp_mflags}
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -99,7 +94,7 @@ make test
 %postun -n turbojpeg -p /sbin/ldconfig
 
 %files
-%doc README README-turbo.txt change.log ChangeLog.txt
+%doc README README-turbo.txt ChangeLog.txt
 %{_libdir}/libjpeg.so.62*
 
 %files devel
@@ -132,6 +127,11 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Tue Jun 16 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1.4.1-1
+- new upstream version 1.4.1
+- nasm available on all arches
+- run tests with SMP
+
 * Tue Jan 20 2015 Petr Hracek <phracek@redhat.com> - 1.4.0-1
 - new upstream version 1.4.0 (#1180442)
 
