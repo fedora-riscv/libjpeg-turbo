@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.4.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -89,6 +89,44 @@ find %{buildroot} -name "*.la" -delete
 # Fix perms
 chmod -x README-turbo.txt
 
+# multilib header hack
+# we only apply this to known Red Hat multilib arches, per bug #1264675
+case `uname -i` in
+  i386 | ppc | s390 | sparc )
+    wordsize="32"
+    ;;
+  x86_64 | ppc64 | s390x | sparc64 )
+    wordsize="64"
+    ;;
+  *)
+    wordsize=""
+    ;;
+esac
+
+if test -n "$wordsize"
+then
+  mv $RPM_BUILD_ROOT%{_includedir}/jconfig.h \
+     $RPM_BUILD_ROOT%{_includedir}/jconfig-$wordsize.h
+
+  cat >$RPM_BUILD_ROOT%{_includedir}/jconfig.h <<EOF
+#ifndef JCONFIG_H_MULTILIB
+#define JCONFIG_H_MULTILIB
+
+#include <bits/wordsize.h>
+
+#if __WORDSIZE == 32
+# include "jconfig-32.h"
+#elif __WORDSIZE == 64
+# include "jconfig-64.h"
+#else
+# error "unexpected value for __WORDSIZE macro"
+#endif
+
+#endif
+EOF
+
+fi
+
 %check
 make test
 
@@ -104,7 +142,7 @@ make test
 
 %files devel
 %doc coderules.txt jconfig.txt libjpeg.txt structure.txt example.c
-%{_includedir}/jconfig.h
+%{_includedir}/jconfig*
 %{_includedir}/jerror.h
 %{_includedir}/jmorecfg.h
 %{_includedir}/jpegint.h
@@ -132,6 +170,9 @@ make test
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Wed Oct 07 2015 Petr Hracek <phracek@redhat.com> - 1.4.0-2
+- Fix multilib issue like jconfig.h (#1264675)
+
 * Tue Jan 20 2015 Petr Hracek <phracek@redhat.com> - 1.4.0-1
 - new upstream version 1.4.0 (#1180442)
 
