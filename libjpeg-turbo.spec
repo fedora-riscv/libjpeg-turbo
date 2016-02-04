@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.4.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -165,6 +165,9 @@ make test %{?_smp_mflags}
 %{_libdir}/libturbojpeg.so
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Wed Oct 07 2015 Petr Hracek <phracek@redhat.com> - 1.4.2-2
 - Fix problem with multilibs like jconfig.h (#1264675)
 
