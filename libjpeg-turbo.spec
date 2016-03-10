@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
-Version:        1.4.2
-Release:        3%{?dist}
+Version:        1.4.90
+Release:        1%{?dist}
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -82,7 +82,7 @@ make install DESTDIR=%{buildroot}
 find %{buildroot} -name "*.la" -delete
 
 # Fix perms
-chmod -x README-turbo.txt
+chmod -x README.md
 
 # multilib header hack
 # we only apply this to known Red Hat multilib arches, per bug #1264675
@@ -132,7 +132,7 @@ make test %{?_smp_mflags}
 %postun -n turbojpeg -p /sbin/ldconfig
 
 %files
-%doc README README-turbo.txt ChangeLog.txt
+%doc README.md README.ijg ChangeLog.txt
 %{_libdir}/libjpeg.so.62*
 
 %files devel
@@ -143,6 +143,7 @@ make test %{?_smp_mflags}
 %{_includedir}/jpegint.h
 %{_includedir}/jpeglib.h
 %{_libdir}/libjpeg.so
+%{_libdir}/pkgconfig/libjpeg.pc
 
 %files utils
 %doc usage.txt wizard.txt
@@ -163,8 +164,12 @@ make test %{?_smp_mflags}
 %files -n turbojpeg-devel
 %{_includedir}/turbojpeg.h
 %{_libdir}/libturbojpeg.so
+%{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Thu Mar 10 2016 Petr Hracek <phracek@redhat.com> - 1.4.90-1
+- New upstream release 1.4.90 (#1313111)
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
