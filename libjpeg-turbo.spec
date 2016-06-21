@@ -1,5 +1,5 @@
 Name:           libjpeg-turbo
-Version:        1.4.90
+Version:        1.5.0
 Release:        1%{?dist}
 Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
 License:        IJG
@@ -132,7 +132,7 @@ make test %{?_smp_mflags}
 %postun -n turbojpeg -p /sbin/ldconfig
 
 %files
-%doc README.md README.ijg ChangeLog.txt
+%doc README.md README.ijg ChangeLog.md
 %{_libdir}/libjpeg.so.62*
 
 %files devel
@@ -167,6 +167,9 @@ make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Tue Jun 21 2016 Petr Hracek <phracek@redhat.com> - 1.5.0-1
+- New upstream release 1.5.0 (#1343786)
+
 * Thu Mar 10 2016 Petr Hracek <phracek@redhat.com> - 1.4.90-1
 - New upstream release 1.4.90 (#1313111)
 
