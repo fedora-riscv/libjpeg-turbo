@@ -1,13 +1,14 @@
 Name:           libjpeg-turbo
 Version:        1.5.0
-Release:        1%{?dist}
-Summary:        A MMX/SSE2 accelerated library for manipulating JPEG image files
+Release:        2%{?dist}
+Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
 
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         libjpeg-turbo14-noinst.patch
 Patch1:         libjpeg-turbo-header-files.patch
+Patch2:         libjpeg-turbo-aarch64.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -71,6 +72,7 @@ manipulate JPEG files using the TurboJPEG library.
 %setup -q
 %patch0 -p1 -b .noinst
 %patch1 -p1 -b .header-files
+%patch2 -p1 -b .aarch64
 
 %build
 autoreconf -vif
@@ -167,6 +169,9 @@ make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Tue Sep 13 2016 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.0-2
+- Add upstream fix to fix SIMD crash on aarch64 (rhbz #1368569)
+
 * Tue Jun 21 2016 Petr Hracek <phracek@redhat.com> - 1.5.0-1
 - New upstream release 1.5.0 (#1343786)
 
