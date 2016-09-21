@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.5.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -10,6 +10,7 @@ Patch0:         libjpeg-turbo14-noinst.patch
 Patch1:         libjpeg-turbo-header-files.patch
 Patch2:         libjpeg-turbo-aarch64.patch
 Patch3:         libjpeg-turbo-arm-neon.patch
+Patch4:         libjpeg-turbo-aarch64-fixneon.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -75,14 +76,11 @@ manipulate JPEG files using the TurboJPEG library.
 %patch1 -p1 -b .header-files
 %patch2 -p1 -b .aarch64
 %patch3 -p1 -b .neon
+%patch4 -p1 -b .a64-neon
 
 %build
 autoreconf -vif
-%configure \
-%ifarch aarch64
---without-simd \
-%endif
---disable-static
+%configure --disable-static
 
 make %{?_smp_mflags} V=1
 
@@ -176,6 +174,9 @@ make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Wed Sep 21 2016 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.0-4
+- Add upstream aarch64 NEON fix, re-enable SIMD on aarch64
+
 * Mon Sep 19 2016 Peter Robinson <pbrobinson@fedoraproject.org> 1.5.0-3
 - Temporarily disable SIMD on aarch64 until upstream #97 is fixed
 - Add NEON fix for ARMv7
