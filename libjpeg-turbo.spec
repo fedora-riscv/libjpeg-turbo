@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.5.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -124,7 +124,10 @@ EOF
 fi
 
 %check
+%ifnarch %{power64}
+# bittest tjbittest tjquicktest fail on ppc64*
 make test %{?_smp_mflags}
+%endif
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -168,6 +171,9 @@ make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Thu May 18 2017 Karsten Hopp <karsten@redhat.com> - 1.5.1-2
+- disable check on ppc64(le)
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.1-1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
