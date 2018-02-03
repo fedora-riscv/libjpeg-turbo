@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.5.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -126,11 +126,8 @@ fi
 %check
 make test %{?_smp_mflags}
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
-%post -n turbojpeg -p /sbin/ldconfig
-%postun -n turbojpeg -p /sbin/ldconfig
+%ldconfig_scriptlets
+%ldconfig_scriptlets -n turbojpeg
 
 %files
 %doc README.md README.ijg ChangeLog.md
@@ -168,6 +165,9 @@ make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Sat Feb 03 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.5.3-2
+- Switch to %%ldconfig_scriptlets
+
 * Tue Dec 19 2017 Nikola Forró <nforro@redhat.com> - 1.5.3-1
 - New upstream release 1.5.3 (#1468783)
 
