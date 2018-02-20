@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.5.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -9,6 +9,7 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.
 Patch0:         libjpeg-turbo14-noinst.patch
 Patch1:         libjpeg-turbo-header-files.patch
 
+BuildRequires:  gcc
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
@@ -165,6 +166,9 @@ make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Tue Feb 20 2018 Nikola Forró <nforro@redhat.com> - 1.5.3-4
+- Add missing gcc build dependency
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
