@@ -1,17 +1,15 @@
 Name:           libjpeg-turbo
-Version:        1.5.3
-Release:        4%{?dist}
+Version:        1.5.90
+Release:        1%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
 
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Patch0:         libjpeg-turbo14-noinst.patch
-Patch1:         libjpeg-turbo-header-files.patch
+Patch0:         libjpeg-turbo-cmake.patch
 
 BuildRequires:  gcc
-BuildRequires:  autoconf
-BuildRequires:  automake
+BuildRequires:  cmake
 BuildRequires:  libtool
 BuildRequires:  nasm
 
@@ -70,12 +68,12 @@ manipulate JPEG files using the TurboJPEG library.
 
 %prep
 %setup -q
-%patch0 -p1 -b .noinst
-%patch1 -p1 -b .header-files
+%patch0 -p1
 
 %build
-autoreconf -vif
-%configure --disable-static
+%{cmake} -DCMAKE_SKIP_RPATH:BOOL=YES \
+         -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
+         -DENABLE_STATIC:BOOL=NO .
 
 make %{?_smp_mflags} V=1
 
@@ -125,17 +123,18 @@ EOF
 fi
 
 %check
-make test %{?_smp_mflags}
+LD_LIBRARY_PATH=%{buildroot}%{_libdir} make test %{?_smp_mflags}
 
 %ldconfig_scriptlets
 %ldconfig_scriptlets -n turbojpeg
 
 %files
+%license LICENSE.md
 %doc README.md README.ijg ChangeLog.md
 %{_libdir}/libjpeg.so.62*
 
 %files devel
-%doc coderules.txt jconfig.txt libjpeg.txt structure.txt example.c
+%doc coderules.txt jconfig.txt libjpeg.txt structure.txt example.txt
 %{_includedir}/jconfig*.h
 %{_includedir}/jerror.h
 %{_includedir}/jmorecfg.h
@@ -158,14 +157,20 @@ make test %{?_smp_mflags}
 %{_mandir}/man1/wrjpgcom.1*
 
 %files -n turbojpeg
+%license LICENSE.md
+%doc README.md README.ijg ChangeLog.md
 %{_libdir}/libturbojpeg.so.0*
 
 %files -n turbojpeg-devel
+%doc tjexample.c
 %{_includedir}/turbojpeg.h
 %{_libdir}/libturbojpeg.so
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Wed Mar 28 2018 Nikola Forró <nforro@redhat.com> - 1.5.90-1
+- New upstream release 1.5.90 (#1560219)
+
 * Tue Feb 20 2018 Nikola Forró <nforro@redhat.com> - 1.5.3-4
 - Add missing gcc build dependency
 
