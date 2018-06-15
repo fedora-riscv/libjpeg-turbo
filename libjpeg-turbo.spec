@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.5.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -167,6 +167,9 @@ make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Fri Jun 15 2018 Nikola Forró <nforro@redhat.com> - 1.5.3-5
+- Bump release to prevent conflict with existing build in Koji
+
 * Fri Jun 15 2018 Nikola Forró <nforro@redhat.com> - 1.5.3-4
 - Fix CVE-2018-11813 (#1588804)
 
