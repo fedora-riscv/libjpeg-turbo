@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        1.5.3
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -9,6 +9,7 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.
 Patch0:         libjpeg-turbo14-noinst.patch
 Patch1:         libjpeg-turbo-header-files.patch
 Patch2:         libjpeg-turbo-CVE-2018-11813.patch
+Patch3:         libjpeg-turbo-CVE-2018-1152.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -73,6 +74,7 @@ manipulate JPEG files using the TurboJPEG library.
 %patch0 -p1 -b .noinst
 %patch1 -p1 -b .header-files
 %patch2 -p1 -b .CVE-2018-11813
+%patch3 -p1 -b .CVE-2018-1152
 
 %build
 autoreconf -vif
@@ -167,6 +169,9 @@ make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Fri Jun 29 2018 Nikola Forró <nforro@redhat.com> - 1.5.3-6
+- Fix CVE-2018-1152 (#1593555)
+
 * Fri Jun 15 2018 Nikola Forró <nforro@redhat.com> - 1.5.3-5
 - Bump release to prevent conflict with existing build in Koji
 
