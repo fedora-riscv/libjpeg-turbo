@@ -1,12 +1,13 @@
 Name:           libjpeg-turbo
 Version:        2.0.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
 
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         libjpeg-turbo-cmake.patch
+Patch1:         libjpeg-turbo-CET.patch
 
 BuildRequires:  gcc
 BuildRequires:  cmake
@@ -69,8 +70,15 @@ manipulate JPEG files using the TurboJPEG library.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
+# NASM object files are missing GNU Property note for Intel CET,
+# force it on the resulting library
+%ifarch %{ix86} x86_64
+export LDFLAGS="$LDFLAGS -Wl,-z,ibt -Wl,-z,shstk"
+%endif
+
 %{cmake} -DCMAKE_SKIP_RPATH:BOOL=YES \
          -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
          -DENABLE_STATIC:BOOL=NO .
@@ -168,6 +176,9 @@ LD_LIBRARY_PATH=%{buildroot}%{_libdir} make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Mon Apr 29 2019 Nikola Forró <nforro@redhat.com> - 2.0.2-2
+- Support running with Intel CET
+
 * Wed Feb 27 2019 Nikola Forró <nforro@redhat.com> - 2.0.2-1
 - New upstream release 2.0.2
 
