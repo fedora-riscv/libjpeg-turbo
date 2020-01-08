@@ -1,4 +1,4 @@
-From df564b5e94c2c405f41708da7f6414257e4a9649 Mon Sep 17 00:00:00 2001
+From 809c8760436a5ee318d65d30f415c28838fee10b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Nikola=20Forr=C3=B3?= <nforro@redhat.com>
 Date: Mon, 29 Apr 2019 11:28:51 +0200
 Subject: [PATCH] x86 SIMD: Add endbr32/endbr64 instructions
@@ -87,10 +87,10 @@ Signed-off-by: Nikola Forró <nforro@redhat.com>
  70 files changed, 116 insertions(+)
 
 diff --git a/simd/i386/jccolext-avx2.asm b/simd/i386/jccolext-avx2.asm
-index 7a8d784..1a94b79 100644
+index c46d684..7dc6e08 100644
 --- a/simd/i386/jccolext-avx2.asm
 +++ b/simd/i386/jccolext-avx2.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_ycc_convert_avx2)
  
  EXTN(jsimd_rgb_ycc_convert_avx2):
@@ -99,10 +99,10 @@ index 7a8d784..1a94b79 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jccolext-mmx.asm b/simd/i386/jccolext-mmx.asm
-index 9a2c30e..3b526bf 100644
+index 6357a42..8048abb 100644
 --- a/simd/i386/jccolext-mmx.asm
 +++ b/simd/i386/jccolext-mmx.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_ycc_convert_mmx)
  
  EXTN(jsimd_rgb_ycc_convert_mmx):
@@ -111,10 +111,10 @@ index 9a2c30e..3b526bf 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jccolext-sse2.asm b/simd/i386/jccolext-sse2.asm
-index e830562..f84ed39 100644
+index c6c8085..5307ddc 100644
 --- a/simd/i386/jccolext-sse2.asm
 +++ b/simd/i386/jccolext-sse2.asm
-@@ -43,6 +43,7 @@
+@@ -41,6 +41,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_ycc_convert_sse2)
  
  EXTN(jsimd_rgb_ycc_convert_sse2):
@@ -123,10 +123,10 @@ index e830562..f84ed39 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jcgryext-avx2.asm b/simd/i386/jcgryext-avx2.asm
-index 52e99a8..f32540c 100644
+index 3fa7973..27a0e11 100644
 --- a/simd/i386/jcgryext-avx2.asm
 +++ b/simd/i386/jcgryext-avx2.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_gray_convert_avx2)
  
  EXTN(jsimd_rgb_gray_convert_avx2):
@@ -135,10 +135,10 @@ index 52e99a8..f32540c 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jcgryext-mmx.asm b/simd/i386/jcgryext-mmx.asm
-index 4a9ab0d..5ef3da2 100644
+index 8af42e5..dda0e05 100644
 --- a/simd/i386/jcgryext-mmx.asm
 +++ b/simd/i386/jcgryext-mmx.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_gray_convert_mmx)
  
  EXTN(jsimd_rgb_gray_convert_mmx):
@@ -147,10 +147,10 @@ index 4a9ab0d..5ef3da2 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jcgryext-sse2.asm b/simd/i386/jcgryext-sse2.asm
-index 04d891c..14f1975 100644
+index c9d6ff1..f8835bb 100644
 --- a/simd/i386/jcgryext-sse2.asm
 +++ b/simd/i386/jcgryext-sse2.asm
-@@ -43,6 +43,7 @@
+@@ -41,6 +41,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_gray_convert_sse2)
  
  EXTN(jsimd_rgb_gray_convert_sse2):
@@ -159,10 +159,10 @@ index 04d891c..14f1975 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jchuff-sse2.asm b/simd/i386/jchuff-sse2.asm
-index 6ea69f6..98edd0a 100644
+index 79f0ca5..91e6e1d 100644
 --- a/simd/i386/jchuff-sse2.asm
 +++ b/simd/i386/jchuff-sse2.asm
-@@ -182,6 +182,7 @@ EXTN(jconst_huff_encode_one_block):
+@@ -180,6 +180,7 @@ EXTN(jconst_huff_encode_one_block):
      GLOBAL_FUNCTION(jsimd_huff_encode_one_block_sse2)
  
  EXTN(jsimd_huff_encode_one_block_sse2):
@@ -171,10 +171,10 @@ index 6ea69f6..98edd0a 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jcphuff-sse2.asm b/simd/i386/jcphuff-sse2.asm
-index e35a7d8..5e55f4b 100644
+index 8b73178..87190d1 100644
 --- a/simd/i386/jcphuff-sse2.asm
 +++ b/simd/i386/jcphuff-sse2.asm
-@@ -283,6 +283,7 @@
+@@ -281,6 +281,7 @@
      GLOBAL_FUNCTION(jsimd_encode_mcu_AC_first_prepare_sse2)
  
  EXTN(jsimd_encode_mcu_AC_first_prepare_sse2):
@@ -182,7 +182,7 @@ index e35a7d8..5e55f4b 100644
      push        ebp
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
-@@ -462,6 +463,7 @@ EXTN(jsimd_encode_mcu_AC_first_prepare_sse2):
+@@ -460,6 +461,7 @@ EXTN(jsimd_encode_mcu_AC_first_prepare_sse2):
      GLOBAL_FUNCTION(jsimd_encode_mcu_AC_refine_prepare_sse2)
  
  EXTN(jsimd_encode_mcu_AC_refine_prepare_sse2):
@@ -191,10 +191,10 @@ index e35a7d8..5e55f4b 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jcsample-avx2.asm b/simd/i386/jcsample-avx2.asm
-index 5bcdefd..1f0ca65 100644
+index 0a20802..46eba8c 100644
 --- a/simd/i386/jcsample-avx2.asm
 +++ b/simd/i386/jcsample-avx2.asm
-@@ -45,6 +45,7 @@
+@@ -43,6 +43,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_downsample_avx2)
  
  EXTN(jsimd_h2v1_downsample_avx2):
@@ -202,7 +202,7 @@ index 5bcdefd..1f0ca65 100644
      push        ebp
      mov         ebp, esp
  ;   push        ebx                     ; unused
-@@ -218,6 +219,7 @@ EXTN(jsimd_h2v1_downsample_avx2):
+@@ -216,6 +217,7 @@ EXTN(jsimd_h2v1_downsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v2_downsample_avx2)
  
  EXTN(jsimd_h2v2_downsample_avx2):
@@ -211,10 +211,10 @@ index 5bcdefd..1f0ca65 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/i386/jcsample-mmx.asm b/simd/i386/jcsample-mmx.asm
-index faf4234..a2c14df 100644
+index 2c223ee..b2b8ded 100644
 --- a/simd/i386/jcsample-mmx.asm
 +++ b/simd/i386/jcsample-mmx.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_downsample_mmx)
  
  EXTN(jsimd_h2v1_downsample_mmx):
@@ -222,7 +222,7 @@ index faf4234..a2c14df 100644
      push        ebp
      mov         ebp, esp
  ;   push        ebx                     ; unused
-@@ -187,6 +188,7 @@ EXTN(jsimd_h2v1_downsample_mmx):
+@@ -185,6 +186,7 @@ EXTN(jsimd_h2v1_downsample_mmx):
      GLOBAL_FUNCTION(jsimd_h2v2_downsample_mmx)
  
  EXTN(jsimd_h2v2_downsample_mmx):
@@ -231,10 +231,10 @@ index faf4234..a2c14df 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/i386/jcsample-sse2.asm b/simd/i386/jcsample-sse2.asm
-index b10fa83..74205d0 100644
+index 4fea60d..4c22b40 100644
 --- a/simd/i386/jcsample-sse2.asm
 +++ b/simd/i386/jcsample-sse2.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_downsample_sse2)
  
  EXTN(jsimd_h2v1_downsample_sse2):
@@ -242,7 +242,7 @@ index b10fa83..74205d0 100644
      push        ebp
      mov         ebp, esp
  ;   push        ebx                     ; unused
-@@ -200,6 +201,7 @@ EXTN(jsimd_h2v1_downsample_sse2):
+@@ -198,6 +199,7 @@ EXTN(jsimd_h2v1_downsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v2_downsample_sse2)
  
  EXTN(jsimd_h2v2_downsample_sse2):
@@ -251,10 +251,10 @@ index b10fa83..74205d0 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/i386/jdcolext-avx2.asm b/simd/i386/jdcolext-avx2.asm
-index 46de9b9..7119de4 100644
+index 015be04..b076765 100644
 --- a/simd/i386/jdcolext-avx2.asm
 +++ b/simd/i386/jdcolext-avx2.asm
-@@ -45,6 +45,7 @@
+@@ -43,6 +43,7 @@
      GLOBAL_FUNCTION(jsimd_ycc_rgb_convert_avx2)
  
  EXTN(jsimd_ycc_rgb_convert_avx2):
@@ -263,10 +263,10 @@ index 46de9b9..7119de4 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jdcolext-mmx.asm b/simd/i386/jdcolext-mmx.asm
-index cd2cb3f..10f135a 100644
+index 5813cfc..150f5b6 100644
 --- a/simd/i386/jdcolext-mmx.asm
 +++ b/simd/i386/jdcolext-mmx.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_ycc_rgb_convert_mmx)
  
  EXTN(jsimd_ycc_rgb_convert_mmx):
@@ -275,10 +275,10 @@ index cd2cb3f..10f135a 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jdcolext-sse2.asm b/simd/i386/jdcolext-sse2.asm
-index 0fcb006..10d264d 100644
+index d5572b3..cd3ac70 100644
 --- a/simd/i386/jdcolext-sse2.asm
 +++ b/simd/i386/jdcolext-sse2.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_ycc_rgb_convert_sse2)
  
  EXTN(jsimd_ycc_rgb_convert_sse2):
@@ -287,10 +287,10 @@ index 0fcb006..10d264d 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jdmrgext-avx2.asm b/simd/i386/jdmrgext-avx2.asm
-index cde4865..8621951 100644
+index e35f728..0db0aa4 100644
 --- a/simd/i386/jdmrgext-avx2.asm
 +++ b/simd/i386/jdmrgext-avx2.asm
-@@ -45,6 +45,7 @@
+@@ -43,6 +43,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_merged_upsample_avx2)
  
  EXTN(jsimd_h2v1_merged_upsample_avx2):
@@ -298,7 +298,7 @@ index cde4865..8621951 100644
      push        ebp
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
-@@ -525,6 +526,7 @@ EXTN(jsimd_h2v1_merged_upsample_avx2):
+@@ -523,6 +524,7 @@ EXTN(jsimd_h2v1_merged_upsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v2_merged_upsample_avx2)
  
  EXTN(jsimd_h2v2_merged_upsample_avx2):
@@ -307,10 +307,10 @@ index cde4865..8621951 100644
      mov         ebp, esp
      push        ebx
 diff --git a/simd/i386/jdmrgext-mmx.asm b/simd/i386/jdmrgext-mmx.asm
-index 4b9e35d..51741db 100644
+index eb3e36b..6427a1a 100644
 --- a/simd/i386/jdmrgext-mmx.asm
 +++ b/simd/i386/jdmrgext-mmx.asm
-@@ -42,6 +42,7 @@
+@@ -40,6 +40,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_merged_upsample_mmx)
  
  EXTN(jsimd_h2v1_merged_upsample_mmx):
@@ -318,7 +318,7 @@ index 4b9e35d..51741db 100644
      push        ebp
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
-@@ -410,6 +411,7 @@ EXTN(jsimd_h2v1_merged_upsample_mmx):
+@@ -408,6 +409,7 @@ EXTN(jsimd_h2v1_merged_upsample_mmx):
      GLOBAL_FUNCTION(jsimd_h2v2_merged_upsample_mmx)
  
  EXTN(jsimd_h2v2_merged_upsample_mmx):
@@ -327,10 +327,10 @@ index 4b9e35d..51741db 100644
      mov         ebp, esp
      push        ebx
 diff --git a/simd/i386/jdmrgext-sse2.asm b/simd/i386/jdmrgext-sse2.asm
-index ac4697e..4cb088d 100644
+index c113dc4..6897fa1 100644
 --- a/simd/i386/jdmrgext-sse2.asm
 +++ b/simd/i386/jdmrgext-sse2.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_merged_upsample_sse2)
  
  EXTN(jsimd_h2v1_merged_upsample_sse2):
@@ -338,7 +338,7 @@ index ac4697e..4cb088d 100644
      push        ebp
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
-@@ -467,6 +468,7 @@ EXTN(jsimd_h2v1_merged_upsample_sse2):
+@@ -465,6 +466,7 @@ EXTN(jsimd_h2v1_merged_upsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v2_merged_upsample_sse2)
  
  EXTN(jsimd_h2v2_merged_upsample_sse2):
@@ -347,10 +347,10 @@ index ac4697e..4cb088d 100644
      mov         ebp, esp
      push        ebx
 diff --git a/simd/i386/jdsample-avx2.asm b/simd/i386/jdsample-avx2.asm
-index 61ce511..4dcb328 100644
+index a800c35..7d52708 100644
 --- a/simd/i386/jdsample-avx2.asm
 +++ b/simd/i386/jdsample-avx2.asm
-@@ -62,6 +62,7 @@ PW_EIGHT times 16 dw 8
+@@ -60,6 +60,7 @@ PW_EIGHT times 16 dw 8
      GLOBAL_FUNCTION(jsimd_h2v1_fancy_upsample_avx2)
  
  EXTN(jsimd_h2v1_fancy_upsample_avx2):
@@ -358,7 +358,7 @@ index 61ce511..4dcb328 100644
      push        ebp
      mov         ebp, esp
      pushpic     ebx
-@@ -229,6 +230,7 @@ EXTN(jsimd_h2v1_fancy_upsample_avx2):
+@@ -227,6 +228,7 @@ EXTN(jsimd_h2v1_fancy_upsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v2_fancy_upsample_avx2)
  
  EXTN(jsimd_h2v2_fancy_upsample_avx2):
@@ -366,7 +366,7 @@ index 61ce511..4dcb328 100644
      push        ebp
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
-@@ -572,6 +574,7 @@ EXTN(jsimd_h2v2_fancy_upsample_avx2):
+@@ -570,6 +572,7 @@ EXTN(jsimd_h2v2_fancy_upsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v1_upsample_avx2)
  
  EXTN(jsimd_h2v1_upsample_avx2):
@@ -374,7 +374,7 @@ index 61ce511..4dcb328 100644
      push        ebp
      mov         ebp, esp
  ;   push        ebx                     ; unused
-@@ -671,6 +674,7 @@ EXTN(jsimd_h2v1_upsample_avx2):
+@@ -669,6 +672,7 @@ EXTN(jsimd_h2v1_upsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v2_upsample_avx2)
  
  EXTN(jsimd_h2v2_upsample_avx2):
@@ -383,10 +383,10 @@ index 61ce511..4dcb328 100644
      mov         ebp, esp
      push        ebx
 diff --git a/simd/i386/jdsample-mmx.asm b/simd/i386/jdsample-mmx.asm
-index 1f810fa..5d0909d 100644
+index 12c49f0..7f2ab40 100644
 --- a/simd/i386/jdsample-mmx.asm
 +++ b/simd/i386/jdsample-mmx.asm
-@@ -61,6 +61,7 @@ PW_EIGHT times 4 dw 8
+@@ -59,6 +59,7 @@ PW_EIGHT times 4 dw 8
      GLOBAL_FUNCTION(jsimd_h2v1_fancy_upsample_mmx)
  
  EXTN(jsimd_h2v1_fancy_upsample_mmx):
@@ -394,7 +394,7 @@ index 1f810fa..5d0909d 100644
      push        ebp
      mov         ebp, esp
      pushpic     ebx
-@@ -219,6 +220,7 @@ EXTN(jsimd_h2v1_fancy_upsample_mmx):
+@@ -217,6 +218,7 @@ EXTN(jsimd_h2v1_fancy_upsample_mmx):
      GLOBAL_FUNCTION(jsimd_h2v2_fancy_upsample_mmx)
  
  EXTN(jsimd_h2v2_fancy_upsample_mmx):
@@ -402,7 +402,7 @@ index 1f810fa..5d0909d 100644
      push        ebp
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
-@@ -543,6 +545,7 @@ EXTN(jsimd_h2v2_fancy_upsample_mmx):
+@@ -541,6 +543,7 @@ EXTN(jsimd_h2v2_fancy_upsample_mmx):
      GLOBAL_FUNCTION(jsimd_h2v1_upsample_mmx)
  
  EXTN(jsimd_h2v1_upsample_mmx):
@@ -410,7 +410,7 @@ index 1f810fa..5d0909d 100644
      push        ebp
      mov         ebp, esp
  ;   push        ebx                     ; unused
-@@ -642,6 +645,7 @@ EXTN(jsimd_h2v1_upsample_mmx):
+@@ -640,6 +643,7 @@ EXTN(jsimd_h2v1_upsample_mmx):
      GLOBAL_FUNCTION(jsimd_h2v2_upsample_mmx)
  
  EXTN(jsimd_h2v2_upsample_mmx):
@@ -419,10 +419,10 @@ index 1f810fa..5d0909d 100644
      mov         ebp, esp
      push        ebx
 diff --git a/simd/i386/jdsample-sse2.asm b/simd/i386/jdsample-sse2.asm
-index f0da626..84d7433 100644
+index 4e28d2f..3311b25 100644
 --- a/simd/i386/jdsample-sse2.asm
 +++ b/simd/i386/jdsample-sse2.asm
-@@ -61,6 +61,7 @@ PW_EIGHT times 8 dw 8
+@@ -59,6 +59,7 @@ PW_EIGHT times 8 dw 8
      GLOBAL_FUNCTION(jsimd_h2v1_fancy_upsample_sse2)
  
  EXTN(jsimd_h2v1_fancy_upsample_sse2):
@@ -430,7 +430,7 @@ index f0da626..84d7433 100644
      push        ebp
      mov         ebp, esp
      pushpic     ebx
-@@ -218,6 +219,7 @@ EXTN(jsimd_h2v1_fancy_upsample_sse2):
+@@ -216,6 +217,7 @@ EXTN(jsimd_h2v1_fancy_upsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v2_fancy_upsample_sse2)
  
  EXTN(jsimd_h2v2_fancy_upsample_sse2):
@@ -438,7 +438,7 @@ index f0da626..84d7433 100644
      push        ebp
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
-@@ -540,6 +542,7 @@ EXTN(jsimd_h2v2_fancy_upsample_sse2):
+@@ -538,6 +540,7 @@ EXTN(jsimd_h2v2_fancy_upsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v1_upsample_sse2)
  
  EXTN(jsimd_h2v1_upsample_sse2):
@@ -446,7 +446,7 @@ index f0da626..84d7433 100644
      push        ebp
      mov         ebp, esp
  ;   push        ebx                     ; unused
-@@ -637,6 +640,7 @@ EXTN(jsimd_h2v1_upsample_sse2):
+@@ -635,6 +638,7 @@ EXTN(jsimd_h2v1_upsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v2_upsample_sse2)
  
  EXTN(jsimd_h2v2_upsample_sse2):
@@ -455,10 +455,10 @@ index f0da626..84d7433 100644
      mov         ebp, esp
      push        ebx
 diff --git a/simd/i386/jfdctflt-3dn.asm b/simd/i386/jfdctflt-3dn.asm
-index 1d45865..c7f3fb8 100644
+index 322ab16..109e36e 100644
 --- a/simd/i386/jfdctflt-3dn.asm
 +++ b/simd/i386/jfdctflt-3dn.asm
-@@ -58,6 +58,7 @@ PD_1_306 times 2 dd 1.306562964876376527856643
+@@ -56,6 +56,7 @@ PD_1_306 times 2 dd 1.306562964876376527856643
      GLOBAL_FUNCTION(jsimd_fdct_float_3dnow)
  
  EXTN(jsimd_fdct_float_3dnow):
@@ -467,10 +467,10 @@ index 1d45865..c7f3fb8 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jfdctflt-sse.asm b/simd/i386/jfdctflt-sse.asm
-index 1faf835..c70aeb0 100644
+index 86952c6..b1e0576 100644
 --- a/simd/i386/jfdctflt-sse.asm
 +++ b/simd/i386/jfdctflt-sse.asm
-@@ -69,6 +69,7 @@ PD_1_306 times 4 dd 1.306562964876376527856643
+@@ -67,6 +67,7 @@ PD_1_306 times 4 dd 1.306562964876376527856643
      GLOBAL_FUNCTION(jsimd_fdct_float_sse)
  
  EXTN(jsimd_fdct_float_sse):
@@ -479,10 +479,10 @@ index 1faf835..c70aeb0 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jfdctfst-mmx.asm b/simd/i386/jfdctfst-mmx.asm
-index 0271901..efc2c97 100644
+index 80645a5..be84fdb 100644
 --- a/simd/i386/jfdctfst-mmx.asm
 +++ b/simd/i386/jfdctfst-mmx.asm
-@@ -83,6 +83,7 @@ PW_F1306 times 4 dw F_1_306 << CONST_SHIFT
+@@ -81,6 +81,7 @@ PW_F1306 times 4 dw F_1_306 << CONST_SHIFT
      GLOBAL_FUNCTION(jsimd_fdct_ifast_mmx)
  
  EXTN(jsimd_fdct_ifast_mmx):
@@ -491,10 +491,10 @@ index 0271901..efc2c97 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jfdctfst-sse2.asm b/simd/i386/jfdctfst-sse2.asm
-index f09dadd..919ed27 100644
+index 446fa7a..945f9cf 100644
 --- a/simd/i386/jfdctfst-sse2.asm
 +++ b/simd/i386/jfdctfst-sse2.asm
-@@ -84,6 +84,7 @@ PW_F1306 times 8 dw F_1_306 << CONST_SHIFT
+@@ -82,6 +82,7 @@ PW_F1306 times 8 dw F_1_306 << CONST_SHIFT
      GLOBAL_FUNCTION(jsimd_fdct_ifast_sse2)
  
  EXTN(jsimd_fdct_ifast_sse2):
@@ -503,10 +503,10 @@ index f09dadd..919ed27 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jfdctint-avx2.asm b/simd/i386/jfdctint-avx2.asm
-index ae258ee..921c792 100644
+index 97de230..165c52a 100644
 --- a/simd/i386/jfdctint-avx2.asm
 +++ b/simd/i386/jfdctint-avx2.asm
-@@ -262,6 +262,7 @@ PW_1_NEG1                  times 8  dw  1
+@@ -260,6 +260,7 @@ PW_1_NEG1                  times 8  dw  1
      GLOBAL_FUNCTION(jsimd_fdct_islow_avx2)
  
  EXTN(jsimd_fdct_islow_avx2):
@@ -515,10 +515,10 @@ index ae258ee..921c792 100644
      mov         ebp, esp
      pushpic     ebx
 diff --git a/simd/i386/jfdctint-mmx.asm b/simd/i386/jfdctint-mmx.asm
-index c6bd959..b59bdb1 100644
+index 3ade9d4..983d263 100644
 --- a/simd/i386/jfdctint-mmx.asm
 +++ b/simd/i386/jfdctint-mmx.asm
-@@ -104,6 +104,7 @@ PW_DESCALE_P2X times 4 dw  1 << (PASS1_BITS - 1)
+@@ -102,6 +102,7 @@ PW_DESCALE_P2X times 4 dw  1 << (PASS1_BITS - 1)
      GLOBAL_FUNCTION(jsimd_fdct_islow_mmx)
  
  EXTN(jsimd_fdct_islow_mmx):
@@ -527,10 +527,10 @@ index c6bd959..b59bdb1 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jfdctint-sse2.asm b/simd/i386/jfdctint-sse2.asm
-index d67dcc1..8d3c6f8 100644
+index 71b684c..3451f52 100644
 --- a/simd/i386/jfdctint-sse2.asm
 +++ b/simd/i386/jfdctint-sse2.asm
-@@ -105,6 +105,7 @@ PW_DESCALE_P2X times 8 dw  1 << (PASS1_BITS - 1)
+@@ -103,6 +103,7 @@ PW_DESCALE_P2X times 8 dw  1 << (PASS1_BITS - 1)
      GLOBAL_FUNCTION(jsimd_fdct_islow_sse2)
  
  EXTN(jsimd_fdct_islow_sse2):
@@ -539,10 +539,10 @@ index d67dcc1..8d3c6f8 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctflt-3dn.asm b/simd/i386/jidctflt-3dn.asm
-index 73aa18d..73afee9 100644
+index 8795191..eb49902 100644
 --- a/simd/i386/jidctflt-3dn.asm
 +++ b/simd/i386/jidctflt-3dn.asm
-@@ -67,6 +67,7 @@ PB_CENTERJSAMP  times 8 db CENTERJSAMPLE
+@@ -65,6 +65,7 @@ PB_CENTERJSAMP  times 8 db CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_float_3dnow)
  
  EXTN(jsimd_idct_float_3dnow):
@@ -551,10 +551,10 @@ index 73aa18d..73afee9 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctflt-sse.asm b/simd/i386/jidctflt-sse.asm
-index 386650f..5d6ab0c 100644
+index b27ecfd..ffe54f8 100644
 --- a/simd/i386/jidctflt-sse.asm
 +++ b/simd/i386/jidctflt-sse.asm
-@@ -77,6 +77,7 @@ PB_CENTERJSAMP times 8 db  CENTERJSAMPLE
+@@ -75,6 +75,7 @@ PB_CENTERJSAMP times 8 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_float_sse)
  
  EXTN(jsimd_idct_float_sse):
@@ -563,10 +563,10 @@ index 386650f..5d6ab0c 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctflt-sse2.asm b/simd/i386/jidctflt-sse2.asm
-index 9de7139..94bd5a0 100644
+index c646eae..fd1fe35 100644
 --- a/simd/i386/jidctflt-sse2.asm
 +++ b/simd/i386/jidctflt-sse2.asm
-@@ -77,6 +77,7 @@ PB_CENTERJSAMP  times 16 db  CENTERJSAMPLE
+@@ -75,6 +75,7 @@ PB_CENTERJSAMP  times 16 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_float_sse2)
  
  EXTN(jsimd_idct_float_sse2):
@@ -575,10 +575,10 @@ index 9de7139..94bd5a0 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctfst-mmx.asm b/simd/i386/jidctfst-mmx.asm
-index d3e8a5d..d458df9 100644
+index 24622d4..00940b8 100644
 --- a/simd/i386/jidctfst-mmx.asm
 +++ b/simd/i386/jidctfst-mmx.asm
-@@ -98,6 +98,7 @@ PB_CENTERJSAMP times 8 db  CENTERJSAMPLE
+@@ -96,6 +96,7 @@ PB_CENTERJSAMP times 8 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_ifast_mmx)
  
  EXTN(jsimd_idct_ifast_mmx):
@@ -587,10 +587,10 @@ index d3e8a5d..d458df9 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctfst-sse2.asm b/simd/i386/jidctfst-sse2.asm
-index 83bc414..5e8566f 100644
+index 19704ff..1f4af33 100644
 --- a/simd/i386/jidctfst-sse2.asm
 +++ b/simd/i386/jidctfst-sse2.asm
-@@ -96,6 +96,7 @@ PB_CENTERJSAMP times 16 db  CENTERJSAMPLE
+@@ -94,6 +94,7 @@ PB_CENTERJSAMP times 16 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_ifast_sse2)
  
  EXTN(jsimd_idct_ifast_sse2):
@@ -599,10 +599,10 @@ index 83bc414..5e8566f 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctint-avx2.asm b/simd/i386/jidctint-avx2.asm
-index b3b7b14..6c77546 100644
+index c371985..23633ae 100644
 --- a/simd/i386/jidctint-avx2.asm
 +++ b/simd/i386/jidctint-avx2.asm
-@@ -298,6 +298,7 @@ PW_1_NEG1                  times 8  dw  1
+@@ -296,6 +296,7 @@ PW_1_NEG1                  times 8  dw  1
      GLOBAL_FUNCTION(jsimd_idct_islow_avx2)
  
  EXTN(jsimd_idct_islow_avx2):
@@ -611,10 +611,10 @@ index b3b7b14..6c77546 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctint-mmx.asm b/simd/i386/jidctint-mmx.asm
-index 6ca6d06..2fa0107 100644
+index 4f07f56..6cf6153 100644
 --- a/simd/i386/jidctint-mmx.asm
 +++ b/simd/i386/jidctint-mmx.asm
-@@ -111,6 +111,7 @@ PB_CENTERJSAMP times 8 db  CENTERJSAMPLE
+@@ -109,6 +109,7 @@ PB_CENTERJSAMP times 8 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_islow_mmx)
  
  EXTN(jsimd_idct_islow_mmx):
@@ -623,10 +623,10 @@ index 6ca6d06..2fa0107 100644
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctint-sse2.asm b/simd/i386/jidctint-sse2.asm
-index a6bd00a..381abd9 100644
+index e442fdd..dae5b7d 100644
 --- a/simd/i386/jidctint-sse2.asm
 +++ b/simd/i386/jidctint-sse2.asm
-@@ -109,6 +109,7 @@ PB_CENTERJSAMP times 16 db  CENTERJSAMPLE
+@@ -107,6 +107,7 @@ PB_CENTERJSAMP times 16 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_islow_sse2)
  
  EXTN(jsimd_idct_islow_sse2):
@@ -635,10 +635,10 @@ index a6bd00a..381abd9 100644
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
 diff --git a/simd/i386/jidctred-mmx.asm b/simd/i386/jidctred-mmx.asm
-index 336ee3b..c7ba445 100644
+index e2307e1..cb43106 100644
 --- a/simd/i386/jidctred-mmx.asm
 +++ b/simd/i386/jidctred-mmx.asm
-@@ -119,6 +119,7 @@ PB_CENTERJSAMP  times 8 db  CENTERJSAMPLE
+@@ -117,6 +117,7 @@ PB_CENTERJSAMP  times 8 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_4x4_mmx)
  
  EXTN(jsimd_idct_4x4_mmx):
@@ -646,7 +646,7 @@ index 336ee3b..c7ba445 100644
      push        ebp
      mov         eax, esp                    ; eax = original ebp
      sub         esp, byte 4
-@@ -506,6 +507,7 @@ EXTN(jsimd_idct_4x4_mmx):
+@@ -504,6 +505,7 @@ EXTN(jsimd_idct_4x4_mmx):
      GLOBAL_FUNCTION(jsimd_idct_2x2_mmx)
  
  EXTN(jsimd_idct_2x2_mmx):
@@ -655,10 +655,10 @@ index 336ee3b..c7ba445 100644
      mov         ebp, esp
      push        ebx
 diff --git a/simd/i386/jidctred-sse2.asm b/simd/i386/jidctred-sse2.asm
-index 97838ba..cc6c915 100644
+index 6e56494..2a61b9e 100644
 --- a/simd/i386/jidctred-sse2.asm
 +++ b/simd/i386/jidctred-sse2.asm
-@@ -117,6 +117,7 @@ PB_CENTERJSAMP  times 16 db  CENTERJSAMPLE
+@@ -115,6 +115,7 @@ PB_CENTERJSAMP  times 16 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_4x4_sse2)
  
  EXTN(jsimd_idct_4x4_sse2):
@@ -666,7 +666,7 @@ index 97838ba..cc6c915 100644
      push        ebp
      mov         eax, esp                     ; eax = original ebp
      sub         esp, byte 4
-@@ -427,6 +428,7 @@ EXTN(jsimd_idct_4x4_sse2):
+@@ -425,6 +426,7 @@ EXTN(jsimd_idct_4x4_sse2):
      GLOBAL_FUNCTION(jsimd_idct_2x2_sse2)
  
  EXTN(jsimd_idct_2x2_sse2):
@@ -675,10 +675,10 @@ index 97838ba..cc6c915 100644
      mov         ebp, esp
      push        ebx
 diff --git a/simd/i386/jquant-3dn.asm b/simd/i386/jquant-3dn.asm
-index 1767f44..fa350f3 100644
+index 5cb60ca..a0599eb 100644
 --- a/simd/i386/jquant-3dn.asm
 +++ b/simd/i386/jquant-3dn.asm
-@@ -38,6 +38,7 @@
+@@ -36,6 +36,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_float_3dnow)
  
  EXTN(jsimd_convsamp_float_3dnow):
@@ -686,7 +686,7 @@ index 1767f44..fa350f3 100644
      push        ebp
      mov         ebp, esp
      push        ebx
-@@ -140,6 +141,7 @@ EXTN(jsimd_convsamp_float_3dnow):
+@@ -138,6 +139,7 @@ EXTN(jsimd_convsamp_float_3dnow):
      GLOBAL_FUNCTION(jsimd_quantize_float_3dnow)
  
  EXTN(jsimd_quantize_float_3dnow):
@@ -695,10 +695,10 @@ index 1767f44..fa350f3 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/i386/jquant-mmx.asm b/simd/i386/jquant-mmx.asm
-index 98932db..6903db1 100644
+index 61305c6..080021b 100644
 --- a/simd/i386/jquant-mmx.asm
 +++ b/simd/i386/jquant-mmx.asm
-@@ -38,6 +38,7 @@
+@@ -36,6 +36,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_mmx)
  
  EXTN(jsimd_convsamp_mmx):
@@ -706,7 +706,7 @@ index 98932db..6903db1 100644
      push        ebp
      mov         ebp, esp
      push        ebx
-@@ -147,6 +148,7 @@ EXTN(jsimd_convsamp_mmx):
+@@ -145,6 +146,7 @@ EXTN(jsimd_convsamp_mmx):
      GLOBAL_FUNCTION(jsimd_quantize_mmx)
  
  EXTN(jsimd_quantize_mmx):
@@ -715,10 +715,10 @@ index 98932db..6903db1 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/i386/jquant-sse.asm b/simd/i386/jquant-sse.asm
-index cc244c4..99c97f0 100644
+index 218adc9..cacd2a9 100644
 --- a/simd/i386/jquant-sse.asm
 +++ b/simd/i386/jquant-sse.asm
-@@ -38,6 +38,7 @@
+@@ -36,6 +36,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_float_sse)
  
  EXTN(jsimd_convsamp_float_sse):
@@ -726,7 +726,7 @@ index cc244c4..99c97f0 100644
      push        ebp
      mov         ebp, esp
      push        ebx
-@@ -140,6 +141,7 @@ EXTN(jsimd_convsamp_float_sse):
+@@ -138,6 +139,7 @@ EXTN(jsimd_convsamp_float_sse):
      GLOBAL_FUNCTION(jsimd_quantize_float_sse)
  
  EXTN(jsimd_quantize_float_sse):
@@ -735,10 +735,10 @@ index cc244c4..99c97f0 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/i386/jquantf-sse2.asm b/simd/i386/jquantf-sse2.asm
-index 8d1201c..5118837 100644
+index a881ab5..6f4789c 100644
 --- a/simd/i386/jquantf-sse2.asm
 +++ b/simd/i386/jquantf-sse2.asm
-@@ -38,6 +38,7 @@
+@@ -36,6 +36,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_float_sse2)
  
  EXTN(jsimd_convsamp_float_sse2):
@@ -746,7 +746,7 @@ index 8d1201c..5118837 100644
      push        ebp
      mov         ebp, esp
      push        ebx
-@@ -117,6 +118,7 @@ EXTN(jsimd_convsamp_float_sse2):
+@@ -115,6 +116,7 @@ EXTN(jsimd_convsamp_float_sse2):
      GLOBAL_FUNCTION(jsimd_quantize_float_sse2)
  
  EXTN(jsimd_quantize_float_sse2):
@@ -755,10 +755,10 @@ index 8d1201c..5118837 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/i386/jquanti-avx2.asm b/simd/i386/jquanti-avx2.asm
-index ea8e1a1..5df0d10 100644
+index 5ed6bec..efcddd2 100644
 --- a/simd/i386/jquanti-avx2.asm
 +++ b/simd/i386/jquanti-avx2.asm
-@@ -39,6 +39,7 @@
+@@ -37,6 +37,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_avx2)
  
  EXTN(jsimd_convsamp_avx2):
@@ -766,7 +766,7 @@ index ea8e1a1..5df0d10 100644
      push        ebp
      mov         ebp, esp
      push        ebx
-@@ -132,6 +133,7 @@ EXTN(jsimd_convsamp_avx2):
+@@ -130,6 +131,7 @@ EXTN(jsimd_convsamp_avx2):
      GLOBAL_FUNCTION(jsimd_quantize_avx2)
  
  EXTN(jsimd_quantize_avx2):
@@ -775,10 +775,10 @@ index ea8e1a1..5df0d10 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/i386/jquanti-sse2.asm b/simd/i386/jquanti-sse2.asm
-index 2a69494..67a423a 100644
+index 0a50940..98d39e0 100644
 --- a/simd/i386/jquanti-sse2.asm
 +++ b/simd/i386/jquanti-sse2.asm
-@@ -38,6 +38,7 @@
+@@ -36,6 +36,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_sse2)
  
  EXTN(jsimd_convsamp_sse2):
@@ -786,7 +786,7 @@ index 2a69494..67a423a 100644
      push        ebp
      mov         ebp, esp
      push        ebx
-@@ -123,6 +124,7 @@ EXTN(jsimd_convsamp_sse2):
+@@ -121,6 +122,7 @@ EXTN(jsimd_convsamp_sse2):
      GLOBAL_FUNCTION(jsimd_quantize_sse2)
  
  EXTN(jsimd_quantize_sse2):
@@ -795,10 +795,10 @@ index 2a69494..67a423a 100644
      mov         ebp, esp
  ;   push        ebx                     ; unused
 diff --git a/simd/nasm/jsimdext.inc b/simd/nasm/jsimdext.inc
-index b40901f..9c25f7a 100644
+index 9930d80..c9babc5 100644
 --- a/simd/nasm/jsimdext.inc
 +++ b/simd/nasm/jsimdext.inc
-@@ -468,6 +468,14 @@ const_base:
+@@ -471,6 +471,14 @@ const_base:
  
  %endif
  
@@ -814,10 +814,10 @@ index b40901f..9c25f7a 100644
  ;  Defines picked up from the C headers
  ;
 diff --git a/simd/x86_64/jccolext-avx2.asm b/simd/x86_64/jccolext-avx2.asm
-index 5fa3848..b0c1e58 100644
+index 10d2834..878fe70 100644
 --- a/simd/x86_64/jccolext-avx2.asm
 +++ b/simd/x86_64/jccolext-avx2.asm
-@@ -41,6 +41,7 @@
+@@ -39,6 +39,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_ycc_convert_avx2)
  
  EXTN(jsimd_rgb_ycc_convert_avx2):
@@ -826,10 +826,10 @@ index 5fa3848..b0c1e58 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jccolext-sse2.asm b/simd/x86_64/jccolext-sse2.asm
-index b1486c0..0d776ff 100644
+index 2c914d3..9cc65d0 100644
 --- a/simd/x86_64/jccolext-sse2.asm
 +++ b/simd/x86_64/jccolext-sse2.asm
-@@ -40,6 +40,7 @@
+@@ -38,6 +38,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_ycc_convert_sse2)
  
  EXTN(jsimd_rgb_ycc_convert_sse2):
@@ -838,10 +838,10 @@ index b1486c0..0d776ff 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jcgryext-avx2.asm b/simd/x86_64/jcgryext-avx2.asm
-index 79e2aa0..8dc16cf 100644
+index 175b60d..ab7dc6d 100644
 --- a/simd/x86_64/jcgryext-avx2.asm
 +++ b/simd/x86_64/jcgryext-avx2.asm
-@@ -41,6 +41,7 @@
+@@ -39,6 +39,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_gray_convert_avx2)
  
  EXTN(jsimd_rgb_gray_convert_avx2):
@@ -850,10 +850,10 @@ index 79e2aa0..8dc16cf 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jcgryext-sse2.asm b/simd/x86_64/jcgryext-sse2.asm
-index 9c3ae5e..11e0a5d 100644
+index 873be80..7e95b80 100644
 --- a/simd/x86_64/jcgryext-sse2.asm
 +++ b/simd/x86_64/jcgryext-sse2.asm
-@@ -40,6 +40,7 @@
+@@ -38,6 +38,7 @@
      GLOBAL_FUNCTION(jsimd_rgb_gray_convert_sse2)
  
  EXTN(jsimd_rgb_gray_convert_sse2):
@@ -862,10 +862,10 @@ index 9c3ae5e..11e0a5d 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jchuff-sse2.asm b/simd/x86_64/jchuff-sse2.asm
-index 1b091ad..5265f3b 100644
+index aa78fd5..cb82975 100644
 --- a/simd/x86_64/jchuff-sse2.asm
 +++ b/simd/x86_64/jchuff-sse2.asm
-@@ -186,6 +186,7 @@ EXTN(jconst_huff_encode_one_block):
+@@ -184,6 +184,7 @@ EXTN(jconst_huff_encode_one_block):
      GLOBAL_FUNCTION(jsimd_huff_encode_one_block_sse2)
  
  EXTN(jsimd_huff_encode_one_block_sse2):
@@ -874,10 +874,10 @@ index 1b091ad..5265f3b 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jcphuff-sse2.asm b/simd/x86_64/jcphuff-sse2.asm
-index a9446b7..e01966c 100644
+index 8ed4472..f316b27 100644
 --- a/simd/x86_64/jcphuff-sse2.asm
 +++ b/simd/x86_64/jcphuff-sse2.asm
-@@ -283,6 +283,7 @@
+@@ -281,6 +281,7 @@
      GLOBAL_FUNCTION(jsimd_encode_mcu_AC_first_prepare_sse2)
  
  EXTN(jsimd_encode_mcu_AC_first_prepare_sse2):
@@ -885,7 +885,7 @@ index a9446b7..e01966c 100644
      push        rbp
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
-@@ -451,6 +452,7 @@ EXTN(jsimd_encode_mcu_AC_first_prepare_sse2):
+@@ -449,6 +450,7 @@ EXTN(jsimd_encode_mcu_AC_first_prepare_sse2):
      GLOBAL_FUNCTION(jsimd_encode_mcu_AC_refine_prepare_sse2)
  
  EXTN(jsimd_encode_mcu_AC_refine_prepare_sse2):
@@ -894,10 +894,10 @@ index a9446b7..e01966c 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jcsample-avx2.asm b/simd/x86_64/jcsample-avx2.asm
-index 9d5a861..1208dc3 100644
+index d9922bb..2c7051e 100644
 --- a/simd/x86_64/jcsample-avx2.asm
 +++ b/simd/x86_64/jcsample-avx2.asm
-@@ -45,6 +45,7 @@
+@@ -43,6 +43,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_downsample_avx2)
  
  EXTN(jsimd_h2v1_downsample_avx2):
@@ -905,7 +905,7 @@ index 9d5a861..1208dc3 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -207,6 +208,7 @@ EXTN(jsimd_h2v1_downsample_avx2):
+@@ -205,6 +206,7 @@ EXTN(jsimd_h2v1_downsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v2_downsample_avx2)
  
  EXTN(jsimd_h2v2_downsample_avx2):
@@ -914,10 +914,10 @@ index 9d5a861..1208dc3 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jcsample-sse2.asm b/simd/x86_64/jcsample-sse2.asm
-index 1b31536..046b23f 100644
+index 0f107e9..c6f3537 100644
 --- a/simd/x86_64/jcsample-sse2.asm
 +++ b/simd/x86_64/jcsample-sse2.asm
-@@ -44,6 +44,7 @@
+@@ -42,6 +42,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_downsample_sse2)
  
  EXTN(jsimd_h2v1_downsample_sse2):
@@ -925,7 +925,7 @@ index 1b31536..046b23f 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -189,6 +190,7 @@ EXTN(jsimd_h2v1_downsample_sse2):
+@@ -187,6 +188,7 @@ EXTN(jsimd_h2v1_downsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v2_downsample_sse2)
  
  EXTN(jsimd_h2v2_downsample_sse2):
@@ -934,10 +934,10 @@ index 1b31536..046b23f 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jdcolext-avx2.asm b/simd/x86_64/jdcolext-avx2.asm
-index e2b96c7..ab7bfa4 100644
+index 677b8ed..c2f0ed9 100644
 --- a/simd/x86_64/jdcolext-avx2.asm
 +++ b/simd/x86_64/jdcolext-avx2.asm
-@@ -42,6 +42,7 @@
+@@ -40,6 +40,7 @@
      GLOBAL_FUNCTION(jsimd_ycc_rgb_convert_avx2)
  
  EXTN(jsimd_ycc_rgb_convert_avx2):
@@ -946,10 +946,10 @@ index e2b96c7..ab7bfa4 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jdcolext-sse2.asm b/simd/x86_64/jdcolext-sse2.asm
-index a94954b..458fac1 100644
+index 071aa62..f870222 100644
 --- a/simd/x86_64/jdcolext-sse2.asm
 +++ b/simd/x86_64/jdcolext-sse2.asm
-@@ -41,6 +41,7 @@
+@@ -39,6 +39,7 @@
      GLOBAL_FUNCTION(jsimd_ycc_rgb_convert_sse2)
  
  EXTN(jsimd_ycc_rgb_convert_sse2):
@@ -958,10 +958,10 @@ index a94954b..458fac1 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jdmrgext-avx2.asm b/simd/x86_64/jdmrgext-avx2.asm
-index 04e8a94..15dbb53 100644
+index bb733c5..6441f83 100644
 --- a/simd/x86_64/jdmrgext-avx2.asm
 +++ b/simd/x86_64/jdmrgext-avx2.asm
-@@ -42,6 +42,7 @@
+@@ -40,6 +40,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_merged_upsample_avx2)
  
  EXTN(jsimd_h2v1_merged_upsample_avx2):
@@ -969,7 +969,7 @@ index 04e8a94..15dbb53 100644
      push        rbp
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
-@@ -506,6 +507,7 @@ EXTN(jsimd_h2v1_merged_upsample_avx2):
+@@ -504,6 +505,7 @@ EXTN(jsimd_h2v1_merged_upsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v2_merged_upsample_avx2)
  
  EXTN(jsimd_h2v2_merged_upsample_avx2):
@@ -978,10 +978,10 @@ index 04e8a94..15dbb53 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jdmrgext-sse2.asm b/simd/x86_64/jdmrgext-sse2.asm
-index 1cc3345..78a6922 100644
+index b176a4c..9190b82 100644
 --- a/simd/x86_64/jdmrgext-sse2.asm
 +++ b/simd/x86_64/jdmrgext-sse2.asm
-@@ -41,6 +41,7 @@
+@@ -39,6 +39,7 @@
      GLOBAL_FUNCTION(jsimd_h2v1_merged_upsample_sse2)
  
  EXTN(jsimd_h2v1_merged_upsample_sse2):
@@ -989,7 +989,7 @@ index 1cc3345..78a6922 100644
      push        rbp
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
-@@ -448,6 +449,7 @@ EXTN(jsimd_h2v1_merged_upsample_sse2):
+@@ -446,6 +447,7 @@ EXTN(jsimd_h2v1_merged_upsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v2_merged_upsample_sse2)
  
  EXTN(jsimd_h2v2_merged_upsample_sse2):
@@ -998,10 +998,10 @@ index 1cc3345..78a6922 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jdsample-avx2.asm b/simd/x86_64/jdsample-avx2.asm
-index 10fa5c4..025fffd 100644
+index fc274a9..0edc993 100644
 --- a/simd/x86_64/jdsample-avx2.asm
 +++ b/simd/x86_64/jdsample-avx2.asm
-@@ -62,6 +62,7 @@ PW_EIGHT times 16 dw 8
+@@ -60,6 +60,7 @@ PW_EIGHT times 16 dw 8
      GLOBAL_FUNCTION(jsimd_h2v1_fancy_upsample_avx2)
  
  EXTN(jsimd_h2v1_fancy_upsample_avx2):
@@ -1009,7 +1009,7 @@ index 10fa5c4..025fffd 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -216,6 +217,7 @@ EXTN(jsimd_h2v1_fancy_upsample_avx2):
+@@ -214,6 +215,7 @@ EXTN(jsimd_h2v1_fancy_upsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v2_fancy_upsample_avx2)
  
  EXTN(jsimd_h2v2_fancy_upsample_avx2):
@@ -1017,7 +1017,7 @@ index 10fa5c4..025fffd 100644
      push        rbp
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
-@@ -525,6 +527,7 @@ EXTN(jsimd_h2v2_fancy_upsample_avx2):
+@@ -523,6 +525,7 @@ EXTN(jsimd_h2v2_fancy_upsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v1_upsample_avx2)
  
  EXTN(jsimd_h2v1_upsample_avx2):
@@ -1025,7 +1025,7 @@ index 10fa5c4..025fffd 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -614,6 +617,7 @@ EXTN(jsimd_h2v1_upsample_avx2):
+@@ -612,6 +615,7 @@ EXTN(jsimd_h2v1_upsample_avx2):
      GLOBAL_FUNCTION(jsimd_h2v2_upsample_avx2)
  
  EXTN(jsimd_h2v2_upsample_avx2):
@@ -1034,10 +1034,10 @@ index 10fa5c4..025fffd 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jdsample-sse2.asm b/simd/x86_64/jdsample-sse2.asm
-index d8ccda9..cbd1543 100644
+index 20e0767..b6bfb61 100644
 --- a/simd/x86_64/jdsample-sse2.asm
 +++ b/simd/x86_64/jdsample-sse2.asm
-@@ -61,6 +61,7 @@ PW_EIGHT times 8 dw 8
+@@ -59,6 +59,7 @@ PW_EIGHT times 8 dw 8
      GLOBAL_FUNCTION(jsimd_h2v1_fancy_upsample_sse2)
  
  EXTN(jsimd_h2v1_fancy_upsample_sse2):
@@ -1045,7 +1045,7 @@ index d8ccda9..cbd1543 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -203,6 +204,7 @@ EXTN(jsimd_h2v1_fancy_upsample_sse2):
+@@ -201,6 +202,7 @@ EXTN(jsimd_h2v1_fancy_upsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v2_fancy_upsample_sse2)
  
  EXTN(jsimd_h2v2_fancy_upsample_sse2):
@@ -1053,7 +1053,7 @@ index d8ccda9..cbd1543 100644
      push        rbp
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
-@@ -498,6 +500,7 @@ EXTN(jsimd_h2v2_fancy_upsample_sse2):
+@@ -496,6 +498,7 @@ EXTN(jsimd_h2v2_fancy_upsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v1_upsample_sse2)
  
  EXTN(jsimd_h2v1_upsample_sse2):
@@ -1061,7 +1061,7 @@ index d8ccda9..cbd1543 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -585,6 +588,7 @@ EXTN(jsimd_h2v1_upsample_sse2):
+@@ -583,6 +586,7 @@ EXTN(jsimd_h2v1_upsample_sse2):
      GLOBAL_FUNCTION(jsimd_h2v2_upsample_sse2)
  
  EXTN(jsimd_h2v2_upsample_sse2):
@@ -1070,10 +1070,10 @@ index d8ccda9..cbd1543 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jfdctflt-sse.asm b/simd/x86_64/jfdctflt-sse.asm
-index 26f9fb6..45ddfc2 100644
+index ef27966..90d06eb 100644
 --- a/simd/x86_64/jfdctflt-sse.asm
 +++ b/simd/x86_64/jfdctflt-sse.asm
-@@ -67,6 +67,7 @@ PD_1_306 times 4 dd 1.306562964876376527856643
+@@ -65,6 +65,7 @@ PD_1_306 times 4 dd 1.306562964876376527856643
      GLOBAL_FUNCTION(jsimd_fdct_float_sse)
  
  EXTN(jsimd_fdct_float_sse):
@@ -1082,10 +1082,10 @@ index 26f9fb6..45ddfc2 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jfdctfst-sse2.asm b/simd/x86_64/jfdctfst-sse2.asm
-index aaf8b9e..c14a184 100644
+index 2e1bfe6..5a74aaf 100644
 --- a/simd/x86_64/jfdctfst-sse2.asm
 +++ b/simd/x86_64/jfdctfst-sse2.asm
-@@ -82,6 +82,7 @@ PW_F1306 times 8 dw F_1_306 << CONST_SHIFT
+@@ -80,6 +80,7 @@ PW_F1306 times 8 dw F_1_306 << CONST_SHIFT
      GLOBAL_FUNCTION(jsimd_fdct_ifast_sse2)
  
  EXTN(jsimd_fdct_ifast_sse2):
@@ -1094,10 +1094,10 @@ index aaf8b9e..c14a184 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jfdctint-avx2.asm b/simd/x86_64/jfdctint-avx2.asm
-index 448f47d..e5aaa8e 100644
+index 6ad4cf0..df0e720 100644
 --- a/simd/x86_64/jfdctint-avx2.asm
 +++ b/simd/x86_64/jfdctint-avx2.asm
-@@ -262,6 +262,7 @@ PW_1_NEG1                  times 8  dw  1
+@@ -260,6 +260,7 @@ PW_1_NEG1                  times 8  dw  1
      GLOBAL_FUNCTION(jsimd_fdct_islow_avx2)
  
  EXTN(jsimd_fdct_islow_avx2):
@@ -1106,10 +1106,10 @@ index 448f47d..e5aaa8e 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jfdctint-sse2.asm b/simd/x86_64/jfdctint-sse2.asm
-index ef16a52..092cc3c 100644
+index 5d0de3c..19c192d 100644
 --- a/simd/x86_64/jfdctint-sse2.asm
 +++ b/simd/x86_64/jfdctint-sse2.asm
-@@ -103,6 +103,7 @@ PW_DESCALE_P2X times 8 dw  1 << (PASS1_BITS - 1)
+@@ -101,6 +101,7 @@ PW_DESCALE_P2X times 8 dw  1 << (PASS1_BITS - 1)
      GLOBAL_FUNCTION(jsimd_fdct_islow_sse2)
  
  EXTN(jsimd_fdct_islow_sse2):
@@ -1118,10 +1118,10 @@ index ef16a52..092cc3c 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jidctflt-sse2.asm b/simd/x86_64/jidctflt-sse2.asm
-index b676ef3..d7c7298 100644
+index ab95e1a..bf7d1b4 100644
 --- a/simd/x86_64/jidctflt-sse2.asm
 +++ b/simd/x86_64/jidctflt-sse2.asm
-@@ -77,6 +77,7 @@ PB_CENTERJSAMP  times 16 db  CENTERJSAMPLE
+@@ -75,6 +75,7 @@ PB_CENTERJSAMP  times 16 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_float_sse2)
  
  EXTN(jsimd_idct_float_sse2):
@@ -1130,10 +1130,10 @@ index b676ef3..d7c7298 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jidctfst-sse2.asm b/simd/x86_64/jidctfst-sse2.asm
-index c6c42f9..b7d3f01 100644
+index a66a681..0614f19 100644
 --- a/simd/x86_64/jidctfst-sse2.asm
 +++ b/simd/x86_64/jidctfst-sse2.asm
-@@ -96,6 +96,7 @@ PB_CENTERJSAMP times 16 db  CENTERJSAMPLE
+@@ -94,6 +94,7 @@ PB_CENTERJSAMP times 16 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_ifast_sse2)
  
  EXTN(jsimd_idct_ifast_sse2):
@@ -1142,10 +1142,10 @@ index c6c42f9..b7d3f01 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jidctint-avx2.asm b/simd/x86_64/jidctint-avx2.asm
-index b60b44f..c33f381 100644
+index 50270f4..bc2dd4c 100644
 --- a/simd/x86_64/jidctint-avx2.asm
 +++ b/simd/x86_64/jidctint-avx2.asm
-@@ -283,6 +283,7 @@ PW_1_NEG1                  times 8  dw  1
+@@ -281,6 +281,7 @@ PW_1_NEG1                  times 8  dw  1
      GLOBAL_FUNCTION(jsimd_idct_islow_avx2)
  
  EXTN(jsimd_idct_islow_avx2):
@@ -1154,10 +1154,10 @@ index b60b44f..c33f381 100644
      mov         rax, rsp                     ; rax = original rbp
      mov         rbp, rsp                     ; rbp = aligned rbp
 diff --git a/simd/x86_64/jidctint-sse2.asm b/simd/x86_64/jidctint-sse2.asm
-index 83fc344..7a65f3c 100644
+index 034530c..6212d1d 100644
 --- a/simd/x86_64/jidctint-sse2.asm
 +++ b/simd/x86_64/jidctint-sse2.asm
-@@ -109,6 +109,7 @@ PB_CENTERJSAMP times 16 db  CENTERJSAMPLE
+@@ -107,6 +107,7 @@ PB_CENTERJSAMP times 16 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_islow_sse2)
  
  EXTN(jsimd_idct_islow_sse2):
@@ -1166,10 +1166,10 @@ index 83fc344..7a65f3c 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jidctred-sse2.asm b/simd/x86_64/jidctred-sse2.asm
-index af64fdc..4d53c58 100644
+index 7fbfcc5..231e7c5 100644
 --- a/simd/x86_64/jidctred-sse2.asm
 +++ b/simd/x86_64/jidctred-sse2.asm
-@@ -117,6 +117,7 @@ PB_CENTERJSAMP  times 16 db  CENTERJSAMPLE
+@@ -115,6 +115,7 @@ PB_CENTERJSAMP  times 16 db  CENTERJSAMPLE
      GLOBAL_FUNCTION(jsimd_idct_4x4_sse2)
  
  EXTN(jsimd_idct_4x4_sse2):
@@ -1177,7 +1177,7 @@ index af64fdc..4d53c58 100644
      push        rbp
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
-@@ -415,6 +416,7 @@ EXTN(jsimd_idct_4x4_sse2):
+@@ -413,6 +414,7 @@ EXTN(jsimd_idct_4x4_sse2):
      GLOBAL_FUNCTION(jsimd_idct_2x2_sse2)
  
  EXTN(jsimd_idct_2x2_sse2):
@@ -1186,10 +1186,10 @@ index af64fdc..4d53c58 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jquantf-sse2.asm b/simd/x86_64/jquantf-sse2.asm
-index 4600eec..13c1710 100644
+index 83596a9..0f139ed 100644
 --- a/simd/x86_64/jquantf-sse2.asm
 +++ b/simd/x86_64/jquantf-sse2.asm
-@@ -38,6 +38,7 @@
+@@ -36,6 +36,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_float_sse2)
  
  EXTN(jsimd_convsamp_float_sse2):
@@ -1197,7 +1197,7 @@ index 4600eec..13c1710 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -111,6 +112,7 @@ EXTN(jsimd_convsamp_float_sse2):
+@@ -109,6 +110,7 @@ EXTN(jsimd_convsamp_float_sse2):
      GLOBAL_FUNCTION(jsimd_quantize_float_sse2)
  
  EXTN(jsimd_quantize_float_sse2):
@@ -1206,10 +1206,10 @@ index 4600eec..13c1710 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jquanti-avx2.asm b/simd/x86_64/jquanti-avx2.asm
-index b7243e4..6b20791 100644
+index 5f04d22..7e042f4 100644
 --- a/simd/x86_64/jquanti-avx2.asm
 +++ b/simd/x86_64/jquanti-avx2.asm
-@@ -39,6 +39,7 @@
+@@ -37,6 +37,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_avx2)
  
  EXTN(jsimd_convsamp_avx2):
@@ -1217,7 +1217,7 @@ index b7243e4..6b20791 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -117,6 +118,7 @@ EXTN(jsimd_convsamp_avx2):
+@@ -115,6 +116,7 @@ EXTN(jsimd_convsamp_avx2):
      GLOBAL_FUNCTION(jsimd_quantize_avx2)
  
  EXTN(jsimd_quantize_avx2):
@@ -1226,10 +1226,10 @@ index b7243e4..6b20791 100644
      mov         rax, rsp
      mov         rbp, rsp
 diff --git a/simd/x86_64/jquanti-sse2.asm b/simd/x86_64/jquanti-sse2.asm
-index 7ff7275..7d5cf5a 100644
+index bb6fa69..0a729c7 100644
 --- a/simd/x86_64/jquanti-sse2.asm
 +++ b/simd/x86_64/jquanti-sse2.asm
-@@ -38,6 +38,7 @@
+@@ -36,6 +36,7 @@
      GLOBAL_FUNCTION(jsimd_convsamp_sse2)
  
  EXTN(jsimd_convsamp_sse2):
@@ -1237,7 +1237,7 @@ index 7ff7275..7d5cf5a 100644
      push        rbp
      mov         rax, rsp
      mov         rbp, rsp
-@@ -117,6 +118,7 @@ EXTN(jsimd_convsamp_sse2):
+@@ -115,6 +116,7 @@ EXTN(jsimd_convsamp_sse2):
      GLOBAL_FUNCTION(jsimd_quantize_sse2)
  
  EXTN(jsimd_quantize_sse2):
@@ -1246,5 +1246,5 @@ index 7ff7275..7d5cf5a 100644
      mov         rax, rsp
      mov         rbp, rsp
 -- 
-2.21.0
+2.21.1
 
