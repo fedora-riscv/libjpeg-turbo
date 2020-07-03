@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
-Version:        2.0.4
-Release:        3%{?dist}
+Version:        2.0.5
+Release:        1%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -8,7 +8,6 @@ URL:            http://sourceforge.net/projects/libjpeg-turbo
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         libjpeg-turbo-cmake.patch
 Patch1:         libjpeg-turbo-CET.patch
-Patch2:         libjpeg-turbo-CVE-2020-13790.patch
 
 BuildRequires:  gcc
 BuildRequires:  cmake
@@ -72,7 +71,6 @@ manipulate JPEG files using the TurboJPEG library.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 # NASM object files are missing GNU Property note for Intel CET,
@@ -178,6 +176,9 @@ LD_LIBRARY_PATH=%{buildroot}%{_libdir} make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Fri Jul 03 2020 Nikola Forró <nforro@redhat.com> - 2.0.5-1
+- New upstream release 2.0.5 (#1850293)
+
 * Tue Jun 16 2020 Nikola Forró <nforro@redhat.com> - 2.0.4-3
 - Fix CVE-2020-13790 (#1847159)
 
