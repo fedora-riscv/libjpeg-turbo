@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
 Version:        2.0.5
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -81,12 +81,12 @@ export LDFLAGS="$RPM_LD_FLAGS -Wl,-z,ibt -Wl,-z,shstk"
 
 %{cmake} -DCMAKE_SKIP_RPATH:BOOL=YES \
          -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
-         -DENABLE_STATIC:BOOL=NO .
+         -DENABLE_STATIC:BOOL=NO
 
-%make_build
+%cmake_build
 
 %install
-%make_install
+%cmake_install
 find %{buildroot} -name "*.la" -delete
 
 # Fix perms
@@ -131,7 +131,8 @@ EOF
 fi
 
 %check
-LD_LIBRARY_PATH=%{buildroot}%{_libdir} make test %{?_smp_mflags}
+export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
+%ctest
 
 %ldconfig_scriptlets
 %ldconfig_scriptlets -n turbojpeg
@@ -176,6 +177,9 @@ LD_LIBRARY_PATH=%{buildroot}%{_libdir} make test %{?_smp_mflags}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Tue Aug 04 2020 Nikola Forró <nforro@redhat.com> - 2.0.5-5
+- Fix FTBFS (#1864007)
+
 * Sat Aug 01 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.5-4
 - Second attempt - Rebuilt for
   https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
