@@ -1,6 +1,6 @@
 Name:           libjpeg-turbo
-Version:        2.0.5
-Release:        6%{?dist}
+Version:        2.0.90
+Release:        1%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
 URL:            http://sourceforge.net/projects/libjpeg-turbo
@@ -68,9 +68,7 @@ This package contains header files necessary for developing programs which will
 manipulate JPEG files using the TurboJPEG library.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
+%autosetup -p1
 
 %build
 # NASM object files are missing GNU Property note for Intel CET,
@@ -81,6 +79,9 @@ export LDFLAGS="$RPM_LD_FLAGS -Wl,-z,ibt -Wl,-z,shstk"
 
 %{cmake} -DCMAKE_SKIP_RPATH:BOOL=YES \
          -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
+%ifarch s390x
+         -DFLOATTEST:STRING="fp-contract" \
+%endif
          -DENABLE_STATIC:BOOL=NO
 
 %cmake_build
@@ -151,6 +152,7 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %{_includedir}/jpeglib.h
 %{_libdir}/libjpeg.so
 %{_libdir}/pkgconfig/libjpeg.pc
+%{_libdir}/cmake/%{name}/%{name}*.cmake
 
 %files utils
 %doc usage.txt wizard.txt
@@ -177,6 +179,9 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Thu Jan 28 2021 Nikola Forró <nforro@redhat.com> - 2.0.90-1
+- New upstream release 2.0.90 (#1898427)
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.5-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 

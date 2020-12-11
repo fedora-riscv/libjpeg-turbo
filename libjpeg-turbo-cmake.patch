@@ -1,20 +1,20 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8656d7a..7b2932f 100644
+index 73ebb10..a52a45e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1366,7 +1366,7 @@ set(EXE ${CMAKE_EXECUTABLE_SUFFIX})
- 
- if(WITH_TURBOJPEG)
-   if(ENABLE_SHARED)
--    install(TARGETS turbojpeg tjbench
-+    install(TARGETS turbojpeg
+@@ -1410,8 +1410,6 @@ if(WITH_TURBOJPEG)
        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-@@ -1379,15 +1379,6 @@ if(WITH_TURBOJPEG)
-   if(ENABLE_STATIC)
-     install(TARGETS turbojpeg-static ARCHIVE
-       DESTINATION ${CMAKE_INSTALL_LIBDIR})
+-    install(TARGETS tjbench
+-      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+     if(NOT CMAKE_VERSION VERSION_LESS "3.1" AND MSVC AND
+       CMAKE_C_LINKER_SUPPORTS_PDB)
+       install(FILES "$<TARGET_PDB_FILE:turbojpeg>"
+@@ -1422,15 +1420,6 @@ if(WITH_TURBOJPEG)
+     install(TARGETS turbojpeg-static EXPORT ${CMAKE_PROJECT_NAME}Targets
+       INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 -    if(NOT ENABLE_SHARED)
 -      if(MSVC_IDE OR XCODE)
 -        set(DIR "${CMAKE_CURRENT_BINARY_DIR}/\${CMAKE_INSTALL_CONFIG_NAME}")
@@ -27,7 +27,7 @@ index 8656d7a..7b2932f 100644
    endif()
    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/turbojpeg.h
      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-@@ -1412,18 +1403,6 @@ endif()
+@@ -1457,18 +1446,6 @@ endif()
  
  install(TARGETS rdjpgcom wrjpgcom RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
  
@@ -46,7 +46,7 @@ index 8656d7a..7b2932f 100644
  if(UNIX OR MINGW)
    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cjpeg.1
      ${CMAKE_CURRENT_SOURCE_DIR}/djpeg.1 ${CMAKE_CURRENT_SOURCE_DIR}/jpegtran.1
-@@ -1437,7 +1416,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/pkgscripts/libjpeg.pc
+@@ -1489,7 +1466,7 @@ install(EXPORT ${CMAKE_PROJECT_NAME}Targets
  
  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/jconfig.h
    ${CMAKE_CURRENT_SOURCE_DIR}/jerror.h ${CMAKE_CURRENT_SOURCE_DIR}/jmorecfg.h
