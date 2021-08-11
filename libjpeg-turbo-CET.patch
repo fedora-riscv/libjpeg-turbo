@@ -1,4 +1,4 @@
-From a4f0a1781a96968c5d2db63e5f123b72dbce1876 Mon Sep 17 00:00:00 2001
+From ec7dcec4d423b8af21ef32381de5a4c1f7a541ec Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Nikola=20Forr=C3=B3?= <nforro@redhat.com>
 Date: Thu, 3 Dec 2020 18:19:33 +0100
 Subject: [PATCH] x86 SIMD: Add endbr32/endbr64 instructions
@@ -171,7 +171,7 @@ index 278cf5e..b16b974 100644
  %assign stack_offset      0
  %define arg_state         4 + stack_offset
 diff --git a/simd/i386/jcphuff-sse2.asm b/simd/i386/jcphuff-sse2.asm
-index 8b73178..87190d1 100644
+index c26b48a..7fb01e5 100644
 --- a/simd/i386/jcphuff-sse2.asm
 +++ b/simd/i386/jcphuff-sse2.asm
 @@ -281,6 +281,7 @@
@@ -862,10 +862,10 @@ index f1d399a..550fc2f 100644
      mov         rax, rsp                     ; rax = original rbp
      sub         rsp, byte 4
 diff --git a/simd/x86_64/jchuff-sse2.asm b/simd/x86_64/jchuff-sse2.asm
-index 0072028..1770a84 100644
+index 9ea6df9..7e5ca30 100644
 --- a/simd/x86_64/jchuff-sse2.asm
 +++ b/simd/x86_64/jchuff-sse2.asm
-@@ -258,6 +258,7 @@ times 1 << 14 db 15
+@@ -259,6 +259,7 @@ times 1 << 15 db 16
      GLOBAL_FUNCTION(jsimd_huff_encode_one_block_sse2)
  
  EXTN(jsimd_huff_encode_one_block_sse2):
@@ -874,7 +874,7 @@ index 0072028..1770a84 100644
  %ifdef WIN64
  
 diff --git a/simd/x86_64/jcphuff-sse2.asm b/simd/x86_64/jcphuff-sse2.asm
-index 8ed4472..f316b27 100644
+index 01b5c02..4625c11 100644
 --- a/simd/x86_64/jcphuff-sse2.asm
 +++ b/simd/x86_64/jcphuff-sse2.asm
 @@ -281,6 +281,7 @@
@@ -1246,5 +1246,5 @@ index 3ee4420..fb1b4ae 100644
      mov         rax, rsp
      mov         rbp, rsp
 -- 
-2.26.2
+2.31.1
 
