@@ -1,5 +1,5 @@
 Name:           libjpeg-turbo
-Version:        2.1.1
+Version:        2.1.2
 Release:        1%{?dist}
 Summary:        A MMX/SSE2/SIMD accelerated library for manipulating JPEG image files
 License:        IJG
@@ -179,6 +179,9 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %{_libdir}/pkgconfig/libturbojpeg.pc
 
 %changelog
+* Mon Nov 22 2021 Matej Mužila <mmuzila@redhat.com> - 2.1.2-1
+- New upstream release 2.1.2 (#2025141)
+
 * Wed Aug 11 2021 Nikola Forró <nforro@redhat.com> - 2.1.1-1
 - New upstream release 2.1.1 (#1991844)
 
