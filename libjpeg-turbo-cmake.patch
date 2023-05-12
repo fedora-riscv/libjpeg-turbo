@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1198ece..39ebbc7 100644
+index cca2966..4875bf3 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1436,8 +1436,6 @@ if(WITH_TURBOJPEG)
+@@ -1434,8 +1434,6 @@ if(WITH_TURBOJPEG)
        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
@@ -11,7 +11,7 @@ index 1198ece..39ebbc7 100644
      if(NOT CMAKE_VERSION VERSION_LESS "3.1" AND MSVC AND
        CMAKE_C_LINKER_SUPPORTS_PDB)
        install(FILES "$<TARGET_PDB_FILE:turbojpeg>"
-@@ -1448,15 +1446,6 @@ if(WITH_TURBOJPEG)
+@@ -1446,15 +1444,6 @@ if(WITH_TURBOJPEG)
      install(TARGETS turbojpeg-static EXPORT ${CMAKE_PROJECT_NAME}Targets
        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
@@ -27,7 +27,7 @@ index 1198ece..39ebbc7 100644
    endif()
    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/turbojpeg.h
      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-@@ -1483,18 +1472,6 @@ endif()
+@@ -1481,18 +1470,6 @@ endif()
  
  install(TARGETS rdjpgcom wrjpgcom RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
  
@@ -46,7 +46,7 @@ index 1198ece..39ebbc7 100644
  if(UNIX OR MINGW)
    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cjpeg.1
      ${CMAKE_CURRENT_SOURCE_DIR}/djpeg.1 ${CMAKE_CURRENT_SOURCE_DIR}/jpegtran.1
-@@ -1515,7 +1492,7 @@ install(EXPORT ${CMAKE_PROJECT_NAME}Targets
+@@ -1516,7 +1493,7 @@ install(EXPORT ${CMAKE_PROJECT_NAME}Targets
  
  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/jconfig.h
    ${CMAKE_CURRENT_SOURCE_DIR}/jerror.h ${CMAKE_CURRENT_SOURCE_DIR}/jmorecfg.h
